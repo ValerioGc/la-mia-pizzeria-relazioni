@@ -35,7 +35,7 @@ public class DrinkController {
 		model.addAttribute("obj", drinks);
 		model.addAttribute("routeName", "drink");
 		
-		return "CRUDtemplates/index";
+		return "CRUDtemplates/pizzas-drinks/index";
 	}
 	
 // Show
@@ -48,7 +48,7 @@ public class DrinkController {
 		model.addAttribute("element", "drink");
 		model.addAttribute("routeName", "showDrink");
 		
-		return "CRUDtemplates/show";
+		return "CRUDtemplates/pizzas-drinks/show";
 	}
 		
 		
@@ -62,7 +62,7 @@ public class DrinkController {
 		model.addAttribute("element", "drink");
 		model.addAttribute("action", "/drink/create");
 		
-		return "CRUDtemplates/new";
+		return "CRUDtemplates/pizzas-drinks/new";
 	}
 	
 	@PostMapping("/create")
@@ -90,7 +90,7 @@ public class DrinkController {
 		model.addAttribute("element", "drink");
 		model.addAttribute("action", "/drink/update");
 		
-		return "CRUDtemplates/edit";
+		return "CRUDtemplates/pizzas-drinks/edit";
 	}
 
 	@PostMapping("/update")
