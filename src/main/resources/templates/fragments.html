@@ -1,0 +1,203 @@
+
+
+<head th:fragment="headMain(title)">	
+	<meta charset="ISO-8859-1">
+	<title>[[${title}]]</title>
+	<link rel="shortcut icon" th:href="@{/favicon.ico}">
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+	<link th:rel="stylesheet" th:href="@{/css/common.css}"/>
+	<link th:rel="stylesheet" th:href="@{/css/scrollbar.css}"/>
+	<link th:rel="stylesheet" th:href="@{/webjars/font-awesome/6.2.0/css/all.min.css}"/> 
+</head>
+
+
+	
+<!--------------------- Aside NavBar ----------------------->
+
+<aside th:fragment="asideNav(routeName)" 
+	   class="aside-nav col-2 bg-secondary h-100">
+	
+	<h4 class="py-3 fw-bold text-light">Operazioni:</h4>
+	<nav>
+		<ul class="aside-nav list-group list-unstyled">
+			<li th:class="'list-group-item ' + ${routeName.equals('home') ? 'active' : ''}">	
+				<a href="/home" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('home') ? ' bdy' : ''} "><i class="mx-2 fa-solid fa-house"></i>Homepage</a>
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('search') ? 'active' : ''}">	
+				<a href="/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('search') ? ' bdy' : ''} "><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca</a>
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('priceable') ? 'active' : ''}">	
+				<a href="/priceable" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('priceable') ? ' bdy' : ''} "><i class="mx-2 fa-magnifying-glass fa-solid"></i>Tutti gli elementi</a>
+			</li>
+			<li class="list-group-item text-center text-light bg-dark fw-bold py-1">
+				Pizza
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('pizza') ? 'active' : ''}">
+				<a href="/" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('pizza') ? ' bdy' : ''}"><i class="mx-2 fa-solid fa-list"></i>Vedi tutte le pizze</a>
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('searchPizza') ? 'active' : ''}">	
+				<a href="/pizza/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('searchPizza') ? ' bdy' : ''} "><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca Pizza</a>
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('new') ? 'active' : ''}">
+				<a href="/pizza/create" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('new') ? ' bdy' : ''} "><i class="fa-solid fa-pizza-slice mx-2"></i>Crea una nuova pizza</a>
+			</li>
+			<li class="list-group-item text-center text-light bg-dark fw-bold py-1">
+				Drinks
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('drink') ? 'active' : ''}">
+				<a href="/drink" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('drink') ? ' bdy': ''}"><i class="mx-2 fa-solid fa-list"></i>Vedi tutti i drinks</a>
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('searchDrink') ? 'active ' : ''}">	
+				<a href="/drink/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('searchDrink') ? ' bdy' : ''}"><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca Drink</a>
+			</li>
+			<li th:class="'list-group-item ' + ${routeName.equals('newDrink') ? 'active' : ''}">
+				<a href="/drink/create" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('newDrink') ? ' bdy' : ''} "><i class="fa-solid fa-martini-glass mx-2"></i>Crea un nuovo drink</a>
+			</li>
+		</ul>
+	</nav>
+</aside>
+
+
+	
+<!------------------- Header pagina ------------------------->
+
+<header th:fragment="header()" class="headerApp">
+	<h1 class="text-primary p-3 title-header">Pizzeria Java</h1>
+	<hr/>
+</header>
+			
+
+
+<!--------------------- Main Title ----------------------->
+
+<h3 th:fragment="mainTitle(element)" 
+	class="mainHeader text-center bg-dark text-light py-3 mb-2">
+		[[${element}]]
+</h3>
+
+
+	
+<!--------------------- Table Layout ----------------------->
+
+<table th:fragment="table(obj, objNm, type)"
+	   class="py-3 table table-dark table-striped text-start">
+	<thead>
+		<tr style="position:sticky;top:0;width:100%;border-bottom:1px solid #fff;transition:all 0.5s linear;">
+			<th>Nome</th>
+			<th>Descrizione</th>
+			<th class="text-start">Prezzo</th>
+			<th colspan="3" class="text-center" th:if="${type} == 'display'">Azioni:</th>
+		</tr>
+	</thead>
+	<tbody>		
+		<tr th:each="drink : ${obj}" th:object="${drink}">			 
+			<td class="text-capitalize" th:text="*{name}"></td>
+			<td class="text-capitalize" th:text="*{description}"></td>
+			<td style="width:15%" th:text="*{price} +  ' &euro;'"></td>
+			
+			<span th:if="${type} == 'display'">
+				<td style="width:10%">
+ 					<a class="btn btn-primary" th:href="@{'/' + ${objNm} + '/{id}' (id=${drink.id})}">Dettagli</a> 
+				</td>
+				<td style="width:10%">
+					<a th:href="@{'/' + ${objNm} + '/update/{id}'(id=${drink.id})}" class="btn btn-success">Modifica</a>
+				</td>
+				<td  style="width:10%">
+					<a th:href="@{'/' + ${objNm} + '/delete/{id}'(id=${drink.id})}" class="btn btn-danger">Elimina</a>
+				</td>
+			</span>
+		
+		</tr>
+	</tbody>
+</table> 
+
+
+		
+<!---------------------- Details Section ---------------------->
+
+<div th:fragment="detailsSection(obj, element)" 
+     th:object="${obj}" class="card p-5 border-2 m-auto w-50 mt-5">
+	
+	<h2 class="text-capitalize py-3 m-auto">
+		<i th:class="'mx-2 d-inline-block fa-solid ' + ${element.equals('pizza') ? 'fa-pizza-slice':'fa-martini-glass'}"></i>
+		[[${element}]]:
+	</h2>
+	
+	<ul class="mt-3 mb-5 list-unstyled">			 
+		<li class="pt-2 text-capitalize d-flex justify-content-between align-items-center">
+			<span><strong>Nome:</strong> [[*{name}]]</span>
+			<span><strong>Prezzo:</strong> [[*{price}]] &euro;</span>
+		</li>
+		<li>
+			<hr/>
+		</li>
+		<li class="pb-3 text-capitalize">
+			<span class="d-block py-1"><strong>Descrizione:</strong></span>
+			<span>[[*{description}]] </span>
+		</li>
+	</ul>
+	
+	<span class="m-auto">
+		<a th:href="@{'/' + ${element} + '/update/{id}' (id=*{id})}" 
+		   class=" btn-primary btn mx-2">Modifica</a>			
+		   	
+		<a th:href="@{'/' + ${element} + '/delete/{id}' (id=*{id})}" 
+		   class="btn-danger btn mx-2">Elimina</a>
+	</span>
+</div>
+		
+		
+		
+<!-------------------- Main Form ------------------------>
+
+<form th:fragment="formM(method, action, obj)"
+	  method="POST" th:action="${action}" 
+	  class="card p-5 my-5 w-50 m-auto" 
+	  th:object="${obj}">
+
+	<input type="text" name="id" th:field="*{id}" style="display:none">
+
+	<label for="pName" class="pt-3 pb-1 fw-bold">Nome</label>
+	<input type="text" id="pName" name="pName" th:field="*{name}" />
+	
+	<label for="pDesc" class="pt-3 pb-1 fw-bold">Descrizione</label>
+	<input type="text" id="pDesc" name="pDesc" th:field="*{description}"/>
+	
+	<label for="pPrice" class="pt-3 pb-1 fw-bold">Prezzo</label>
+	<input type="number" id="pPrice" name="pPrice" th:field="*{price}"/>
+
+	<button type="submit" class="btn btn-success mx-auto w-25 my-4">Conferma</button>
+</form>
+	
+	
+		
+<!--------------------- Errors Msg ----------------------->
+
+<ul th:fragment="errorMsg(errors)" th:if="${errors}" class="list-group list-unstyled">
+	<li th:each="error : ${errors}" th:object="${error}" class="p-4 alert alert-danger text-capitalize">
+		[[*{defaultMessage}]]
+	</li>
+</ul>
+
+
+
+<!--------------------- Success Msg ----------------------->
+
+<p th:fragment="successMsg(successMsg)" th:if="${successMsg}" 
+	 class="p-4 alert alert-success text-capitalize timed-exit my-1">
+	[[${successMsg}]]
+</p>
+				
+<!--------------------- Search Form ----------------------->
+
+<form th:fragment="srcBar(query)"
+      class="text-center my-3 py-3" >		
+      	
+	<input type="text" name="query" th:value="${query}" class="v-al-mid d-inline-block w-50 py-2 m-auto form-control" placeholder="Inserisci il nome da cercare">
+	
+	<input type="submit" value="SEARCH" class="v-al-mid d-inline-block btn btn-primary mx-3">
+</form>
+	
+	
+		
+
