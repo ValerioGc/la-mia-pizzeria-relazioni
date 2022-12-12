@@ -41,7 +41,7 @@ public class Pizza implements PriceableInt {
 	private int price;
 	
 	@ManyToOne
-	@JoinColumn(name="promotion_id", nullable = true)
+	@JoinColumn(name="promotion_id", nullable = false)
 	private Promotion promotion;
 	
 	
@@ -53,26 +53,27 @@ public class Pizza implements PriceableInt {
 		setPromotion(promotion);
 	}
 
+	
+// ID
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
+//  Name
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
+//  Description
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}

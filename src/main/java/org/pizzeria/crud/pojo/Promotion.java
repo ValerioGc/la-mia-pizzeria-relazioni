@@ -35,17 +35,18 @@ public class Promotion {
 	@NotNull(message = "Il titolo non può essere null")
 	private String title;
 	
-	@JoinColumn(nullable = false)
 	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE)
 	private List<Pizza> pizzas;
 	
+	public Promotion() { }
 	public Promotion(String startDate, String endDate, String title) {
 		setStartDate(startDate);
 		setEndDate(endDate);
 		setTitle(title);
 	}
 	
-//  start_date
+	
+//  Start Date
 	public LocalDate getStartDate() {
 		return startDate;
 	}
@@ -59,7 +60,6 @@ public class Promotion {
 		return endDate;
 	}
 	public void setEndDate(String endDate) {
-
 		LocalDate leDt = LocalDate.parse(endDate);
 		this.endDate = leDt;
 	}
@@ -87,6 +87,4 @@ public class Promotion {
 				+ "\nInzio: " + getStartDate()
 				+ "\nFine: " + getEndDate();
 	}
-	
-	
 }
