@@ -1,6 +1,6 @@
 # spring-la-mia-pizzeria-relazioni
 
-> Exercise about CRUD with Spring, Thymeleaf and Bootstrap
+> Exercise about Exercise about DB entity relationships
 
 <br/>
 
