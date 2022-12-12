@@ -1,5 +1,8 @@
 package org.pizzeria.crud;
 
+
+import java.util.List;
+
 import org.pizzeria.crud.pojo.Drink;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
@@ -33,7 +36,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 		
-	// Fake data
+	// Promo
 		Promotion prom1 = new Promotion("2022-10-12", "2022-12-12", "promo1");
 		Promotion prom2 = new Promotion("2023-04-01", "2023-05-01","promo2" );
 		Promotion prom3 = new Promotion("2022-12-24", "2023-01-15", "promo3");
@@ -46,6 +49,8 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		promotionService.save(prom4);
 		promotionService.save(prom5);
 		
+		
+//	 Pizza
 		Pizza p1 = new Pizza("bufala", "lorem pizzum", 15, prom1);
 		Pizza p2 = new Pizza("boscaiola", "lorem pizzum", 7, prom2);
 		Pizza p3 = new Pizza("quattro formaggi", "lorem ipsum", 12, prom5);
@@ -73,7 +78,8 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		pizzaService.save(p11);
 		pizzaService.save(p12);
 		pizzaService.save(p13);
-	
+
+	//drinks
 		Drink d1 = new Drink("coca cola", "lorem ipsum", 2);
 		Drink d2 = new Drink("fanta", "lorem ipsumm", 2);
 		Drink d3 = new Drink("pepsi", "lorem ipsumm", 2);
@@ -84,7 +90,6 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		Drink d8 = new Drink("heineken", "lorem ipsum", 3);
 		Drink d9 = new Drink("acqua", "lorem ipsum", 1);
 		Drink d10 = new Drink("chinotto", "lorem ipsum", 2);
-
 
 		drinkService.save(d1);
 		drinkService.save(d2);
@@ -98,9 +103,28 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		drinkService.save(d10);
 		
 
-	// TEST
+// ----------------------------------------------------- TEST ---------------------------------------------------
+	
+	// delete 
+	//	promotionService.deletePromotion(prom2);	
+		
+		// pizza
+		System.out.println("-----------------------------------------------");
+		
+		List<Pizza> pizzasT = pizzaService.findAll();
+		
+		for(Pizza pizza : pizzasT) {
+				System.out.println("-----------Result---------------\n" + pizza + "\n" + pizza.getPromotion());
+		}
 		
 		
+		// promo
+		System.out.println("-----------------------------------------------"); 
 		
+		
+		System.out.println("-----------------------------------------------");
+		
+		
+		System.out.println("-----------------------------------------------");
 	}
 }

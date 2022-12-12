@@ -33,16 +33,16 @@ public class Promotion {
 	@Column(unique = true)
 	@NotEmpty(message = "Il titolo non può essere vuoto")
 	@NotNull(message = "Il titolo non può essere null")
-	private String title;
+	private String name;
 	
 	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE)
 	private List<Pizza> pizzas;
 	
 	public Promotion() { }
-	public Promotion(String startDate, String endDate, String title) {
+	public Promotion(String startDate, String endDate, String name) {
 		setStartDate(startDate);
 		setEndDate(endDate);
-		setTitle(title);
+		setName(name);
 	}
 	
 	
@@ -65,11 +65,11 @@ public class Promotion {
 	}
 	
 // Title
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 // Pizzas
@@ -83,7 +83,7 @@ public class Promotion {
 	
 	@Override
 	public String toString() {
-		return  "Titolo: " + getTitle() 
+		return  "Titolo: " + getName() 
 				+ "\nInzio: " + getStartDate()
 				+ "\nFine: " + getEndDate();
 	}

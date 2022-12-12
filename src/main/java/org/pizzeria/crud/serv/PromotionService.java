@@ -28,7 +28,7 @@ public class PromotionService {
 		return promotionRepo.findById(id);
 	}
 	
-	public void deletePromotionById(Promotion promotion) {
+	public void deletePromotion(Promotion promotion) {
 		promotionRepo.delete(promotion);
 	}
 }

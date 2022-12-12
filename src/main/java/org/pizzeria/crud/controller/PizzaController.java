@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.pizzeria.crud.pojo.Pizza;
+import org.pizzeria.crud.pojo.Promotion;
 import org.pizzeria.crud.serv.PizzaService;
-
+import org.pizzeria.crud.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ public class PizzaController {
 	
 	@Autowired
 	private PizzaService pizzaService;
+
 
 // index
 	@GetMapping

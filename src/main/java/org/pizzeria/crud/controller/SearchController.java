@@ -43,14 +43,4 @@ public class SearchController {
 		
 		return "SRCtemplates/commonSearch";
  	}
-	
-	
-	@GetMapping("/promos")
-	public String getPromos(Model model) {
-		
-		List<Promotion> promos = promotionService.findAll();
-		model.addAttribute("routeName", "promozioni");
-		model.addAttribute("obj", promos);
-		return "CRUDtemplates/index";
-	}
 }
