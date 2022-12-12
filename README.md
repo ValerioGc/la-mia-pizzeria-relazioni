@@ -1,4 +1,4 @@
-# spring-la-mia-pizzeria-crud
+# spring-la-mia-pizzeria-relazioni
 
 > Exercise about CRUD with Spring, Thymeleaf and Bootstrap
 
