@@ -1,17 +1,17 @@
 package org.pizzeria.crud.pojo;
 
-import java.util.List;
 
 import org.pizzeria.crud.intf.PriceableInt;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -40,17 +40,17 @@ public class Pizza implements PriceableInt {
 	@NotNull(message = "Il prezzo non deve esser vuoto")
 	private int price;
 	
-	
-	@OneToMany(mappedBy = "pizza", cascade = CascadeType.REMOVE)
-	private List<Promotion> promotion;
+	@ManyToOne
+	@JoinColumn(name="promotion_id", nullable = true)
+	private Promotion promotion;
 	
 	
 	public Pizza() { }
-	public Pizza(String name, String description, int price, List<Promotion> promotion) {
+	public Pizza(String name, String description, int price, Promotion promotion) {
 		setName(name);
 		setDescription(description);
 		setPrice(price);
-		setPromotions(promotion);
+		setPromotion(promotion);
 	}
 
 	public int getId() {
@@ -79,11 +79,11 @@ public class Pizza implements PriceableInt {
 
 	
 // promo 
-	public List<Promotion> getPromotions() {
+	public Promotion getPromotion() {
 		return promotion;
 	}
-	public List<Promotion> setPromotions(List<Promotion> promotion) {
-		return this.promotion = promotion;
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
 	}
 	
 	

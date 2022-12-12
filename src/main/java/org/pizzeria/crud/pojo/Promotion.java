@@ -3,6 +3,7 @@ package org.pizzeria.crud.pojo;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -33,8 +35,8 @@ public class Promotion {
 	@NotNull(message = "Il titolo non può essere null")
 	private String title;
 	
-	@ManyToOne
 	@JoinColumn(nullable = false)
+	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE)
 	private List<Pizza> pizzas;
 	
 	public Promotion(String startDate, String endDate, String title) {
@@ -69,6 +71,15 @@ public class Promotion {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+// Pizzas
+	public List<Pizza> getPizzas() {
+		return pizzas;
+	}
+	public void setPizzas(List<Pizza> pizzas) {
+		this.pizzas = pizzas;
+	}
+	
 	
 	@Override
 	public String toString() {

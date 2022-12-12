@@ -43,7 +43,7 @@ public class PizzaService {
 		List<Pizza> pizzas = pizzaRepo.findAll();
 		
 		for (Pizza pizza : pizzas) {
-			Hibernate.initialize(pizza.getPromotions());
+			Hibernate.initialize(pizza.getPromotion());
 		}
 		
 		return pizzas;
