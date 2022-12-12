@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
  
-	<th:block th:replace="fragments :: headMain('Modifica ' + ${element})"></th:block>
+	<th:block th:replace="fragments :: headMain('Modifica promozione'})"></th:block>
  
 	<body>
 		<div class="main-container container-fluid bg-light">
@@ -17,13 +17,43 @@
 				<main class="col-9">
 					
 					<!-- Header main title -->
-					<th:block th:replace="fragments :: mainTitle('Modifica ' + ${element})"></th:block>  
+					<th:block th:replace="fragments :: mainTitle('Modifica promozione'})"></th:block>  
 
 					<!-- error message -->
-					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
+<!-- 					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block> -->
 				
 					<!-- Form -->
-					<th:block th:replace="fragments :: formM('POST', ${action}, ${obj})"></th:block>
+						<form th:object="${promo}"
+							action="/promos/store"
+							method="POST"
+							class="text-center py-3 d-flex vertical-align-middle justify-content-stretch">
+							
+							
+							<div class="mx-5 w-50 text-center">
+								<label for="promo-name" class="fw-bold d-block">Crea una nuova promo: </label>
+								<span class="d-flex align-items-center justify-content-center my-5">
+									<input type="text" name="name" id="promo-name" placeholder="Inserisci il nome della promo" class="w-50" th:field="*{name}"/>
+									<input type="submit" value="Crea" class="btn btn-primary mx-3")/>
+								</span>
+							</div>
+							
+							<div class="mx-5" style="width:30%;">
+							
+								<label class="d-block my-3">Seleziona le pizze a cui associare la promo:</label>				
+								
+								<div th:each="promo : ${pizzas.getPromos()}"  class="d-inline-block text-center mx-2 my-2">
+			
+										
+									<input type="checkbox"  
+										value="${pizza.promo.id}" 
+										name="promo_id" />
+										
+									<label class="fw-bold d-inline-block">[[${promo.name}]]</label>
+	
+									
+								</div>
+							</div>
+						</form>		
 					
 				</main>
 			</div>		
