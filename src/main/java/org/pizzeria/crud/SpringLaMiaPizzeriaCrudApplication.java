@@ -42,13 +42,14 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		Promotion prom3 = new Promotion("2022-12-24", "2023-01-15", "promo3");
 		Promotion prom4 = new Promotion("2022-12-24", "2023-01-15", "promo4");
 		Promotion prom5 = new Promotion("2022-12-24", "2023-01-15", "promo5");
-
+		Promotion prom6 = new Promotion("2022-12-24", "2023-01-15", "promo6");
+		
 		promotionService.save(prom1);
 		promotionService.save(prom2);
 		promotionService.save(prom3);
 		promotionService.save(prom4);
 		promotionService.save(prom5);
-		
+		promotionService.save(prom6);
 		
 //	 Pizza
 		Pizza p1 = new Pizza("bufala", "lorem pizzum", 15, prom1);
@@ -105,26 +106,37 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 
 // ----------------------------------------------------- TEST ---------------------------------------------------
 	
-	// delete 
-	//	promotionService.deletePromotion(prom2);	
-		
-		// pizza
+	// Delete 
+		promotionService.deletePromotionById(prom2.getId());	
+				
+	// Pizze
 		System.out.println("-----------------------------------------------");
 		
 		List<Pizza> pizzasT = pizzaService.findAll();
 		
 		for(Pizza pizza : pizzasT) {
-				System.out.println("-----------Result---------------\n" + pizza + "\n" + pizza.getPromotion());
+				System.out.println("----------- Result pizzas---------------\n" + pizza + "\n" + pizza.getPromotion());
 		}
 		
 		
-		// promo
-		System.out.println("-----------------------------------------------"); 
+	// Promos
+		System.out.println("\n-----------------------------------------------\n"); 
 		
+		List<Promotion> promotion = promotionService.findPizzas();
+		
+		for(Promotion promo : promotion) {
+				
+			System.out.println("----------- Result Promo: ---------------\n" + promo);
+				
+			for (Pizza pizza : promo.getPizzas()) {
+				System.err.println("\nPizza associata:" 
+									+ pizza);
+			}
+		}
 		
 		System.out.println("-----------------------------------------------");
+
 		
-		
-		System.out.println("-----------------------------------------------");
+
 	}
 }

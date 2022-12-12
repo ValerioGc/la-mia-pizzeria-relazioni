@@ -41,7 +41,7 @@ public class Pizza implements PriceableInt {
 	private int price;
 	
 	@ManyToOne
-	@JoinColumn(name="promotion_id", nullable = false)
+	@JoinColumn(name="promotion_id", nullable = true)
 	private Promotion promotion;
 	
 	

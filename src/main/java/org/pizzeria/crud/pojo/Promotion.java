@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,7 +36,7 @@ public class Promotion {
 	@NotNull(message = "Il titolo non può essere null")
 	private String name;
 	
-	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<Pizza> pizzas;
 	
 	public Promotion() { }
@@ -46,6 +47,14 @@ public class Promotion {
 	}
 	
 	
+// ID
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 //  Start Date
 	public LocalDate getStartDate() {
 		return startDate;

@@ -21,31 +21,24 @@ public class PizzaService {
 		pizzaRepo.save(pizza);
 	}
 		
-	public Optional<Pizza> findPizzaById(int id) {
-		return pizzaRepo.findById(id);
-	}
-	
-	public void deletePizzaById(int id) {
-		pizzaRepo.deleteById(id);
-	}
-	
-	public List<Pizza> findByName(String name) {
-		return pizzaRepo.findByNameContainingIgnoreCase(name);
-	}
-	
 // Find
 	public List<Pizza> findAll() {
 		return pizzaRepo.findAll();
 	}
-	@Transactional
-	public List<Pizza> findAllPromotion() {
-		
-		List<Pizza> pizzas = pizzaRepo.findAll();
-		
-		for (Pizza pizza : pizzas) {
-			Hibernate.initialize(pizza.getPromotion());
-		}
-		
-		return pizzas;
+	
+// Find by ID
+	public Optional<Pizza> findPizzaById(int id) {
+		return pizzaRepo.findById(id);
 	}
+	
+// Delete by ID
+	public void deletePizzaById(int id) {
+		pizzaRepo.deleteById(id);
+	}
+	
+// Find by name
+	public List<Pizza> findByName(String name) {
+		return pizzaRepo.findByNameContainingIgnoreCase(name);
+	}
+	
 }
