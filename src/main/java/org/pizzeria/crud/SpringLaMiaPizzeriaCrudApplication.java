@@ -4,9 +4,11 @@ package org.pizzeria.crud;
 import java.util.List;
 
 import org.pizzeria.crud.pojo.Drink;
+import org.pizzeria.crud.pojo.Ingredients;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
 import org.pizzeria.crud.serv.DrinkService;
+import org.pizzeria.crud.serv.IngredientsService;
 import org.pizzeria.crud.serv.PizzaService;
 import org.pizzeria.crud.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PromotionService promotionService;
+	
+	@Autowired
+	private IngredientsService ingredientsService;
 	
 	
 	public static void main(String[] args) {
@@ -103,7 +108,16 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		drinkService.save(d9);
 		drinkService.save(d10);
 		
-
+		
+		
+		Ingredients i1 = new Ingredients("farina");
+		Ingredients i2 = new Ingredients("pomodoro");
+		Ingredients i3 = new Ingredients("acqua");
+		
+		ingredientsService.save(i1);
+		ingredientsService.save(i2);
+		ingredientsService.save(i3);
+		
 // ----------------------------------------------------- TEST ---------------------------------------------------
 	
 	// Delete 
@@ -138,5 +152,8 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 
 		
 
+		System.out.println("ingrediente: " + i1.getName());
+		System.out.println("ingrediente: " + i2.getName());
+		System.out.println("ingrediente: " + i3.getName());
 	}
 }
