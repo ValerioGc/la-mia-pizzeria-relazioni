@@ -2,10 +2,8 @@ package org.pizzeria.crud;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.pizzeria.crud.pojo.Drink;
 import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
@@ -96,13 +94,12 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		Pizza p3 = new Pizza("quattro formaggi", "lorem ipsum", 12, prom5, ing3);
 		Pizza p4 = new Pizza("margherita", "lorem pizzum", 6, prom3, ing2);
 		Pizza p5 = new Pizza("capricciosa", "lorem pizzum", 6, prom4, ing3);
-		
-		Pizza p6 = new Pizza("bufala light", "lorem pizzum", 15, prom3);
-		Pizza p7 = new Pizza("norcina", "lorem pizzum", 17, prom5);
-		Pizza p8 = new Pizza("crostino", "lorem ipsum", 12, prom3);
-		Pizza p9 = new Pizza("margherita con bufala", "lorem pizzum", 16, prom1);
+		Pizza p6 = new Pizza("bufala light", "lorem pizzum", 15, prom3,ing1);
+		Pizza p7 = new Pizza("norcina", "lorem pizzum", 17, prom5,ing2);
+		Pizza p8 = new Pizza("crostino", "lorem ipsum", 12, prom3,ing3);
+		Pizza p9 = new Pizza("margherita con bufala", "lorem pizzum", 16, prom1,ing1);
 		Pizza p10 = new Pizza("diavola", "lorem pizzum", 19, prom5);
-		Pizza p11 = new Pizza("noci e pere", "lorem ipsum", 12, prom2);
+		Pizza p11 = new Pizza("noci e pere", "lorem ipsum", 12, prom2,ing3);
 		Pizza p12= new Pizza("margherit con bufala", "lorem pizzum", 16, prom2);
 		Pizza p13 = new Pizza("margherita light", "lorem pizzum", 19, prom5);
 		

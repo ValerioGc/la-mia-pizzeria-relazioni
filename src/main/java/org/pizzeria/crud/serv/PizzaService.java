@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Hibernate;
-import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.repo.PizzaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,7 @@ public class PizzaService {
 		return pizzaRepo.findByNameContainingIgnoreCase(name);
 	}
 	
+// Find ingredients
 	@Transactional
 	public List<Pizza> findAllPIngredient() {
 		

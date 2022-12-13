@@ -19,21 +19,27 @@ public class PromotionService {
 	@Autowired
 	private PromotionRepo promotionRepo;
 	
+// Save
 	public void save(Promotion promotion) {
 		promotionRepo.save(promotion);
 	}
 	
+// Find by ID
 	public Optional<Promotion> findPromotionById(int id) {
 		return promotionRepo.findById(id);
 	}
 	
+// Delete
 	public void deletePromotionById(int id) {
 		promotionRepo.deleteById(id);
 	}
 	
+// Find
 	public List<Promotion> findAll() {
 		return promotionRepo.findAll();
 	}
+
+// Find pizzas
 	@Transactional
 	public List<Promotion> findPizzas() {
 		
