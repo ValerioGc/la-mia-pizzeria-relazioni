@@ -28,6 +28,7 @@ public class PromoController {
 	@Autowired
 	PromotionService pizzaService;
 	
+//  Index
 	@RequestMapping("/index")
 	public String indexPromos(Model model) {
 		
@@ -52,7 +53,7 @@ public class PromoController {
 		
 		System.out.println(promotion);
 		
-		return "redirect:/promo/index";
+		return "redirect:/promos/index";
 	}
 	
 
@@ -63,15 +64,17 @@ public class PromoController {
 		Optional<Promotion> optPromo = promotionService.findPromotionById(id);
 		Promotion promotion = optPromo.get();
 		
-		model.addAttribute("obj", promotion);
+	
+		List<Promotion> pizzas = pizzaService.findAll();
 		
+		model.addAttribute("promo", promotion);
+		model.addAttribute("pizzas", pizzas);
 		model.addAttribute("routeName", "edit");
-		model.addAttribute("element", "pizza");
-		model.addAttribute("action", "/pizza/update");
+		model.addAttribute("action", "/promos/update");
 		
 		return "CRUDtemplates/promo/edit";
 	}
-	
+
 	@PostMapping("/update")
 	public String updatePromo(@Valid Promotion promotion, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -83,7 +86,7 @@ public class PromoController {
 		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
 		pizzaService.save(promotion);
 		
-		return "redirect:/promos";
+		return "redirect:/promos/index";
 	}
 		
 	
@@ -93,6 +96,6 @@ public class PromoController {
 		
 		promotionService.deletePromotionById(id);
 		
-		return "redirect:/promos";
+		return "redirect:/promos/index";
 	}
 }
