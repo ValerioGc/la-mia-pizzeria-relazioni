@@ -39,11 +39,11 @@ public class IngredientService {
 	}
 	
 	@Transactional
-	public List<Ingredient> findAllIngredients() {
+	public List<Ingredient> findAllPizzas() {
 		List<Ingredient> ingredients = ingredientRepo.findAll();
 		
-		for (Ingredient i : ingredients) {
-			Hibernate.initialize(i.getPizzas());
+		for (Ingredient ing : ingredients) {
+			Hibernate.initialize(ing.getPizzas());
 		}
 		
 		return ingredients;
