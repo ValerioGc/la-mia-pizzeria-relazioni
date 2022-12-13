@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<th:block th:replace="fragments :: headMain(${routeName})"></th:block>
+	
+	<body>
+		<div class="main-container container-fluid bg-light" >
+		
+			<!-- Header --> 
+			<th:block th:replace="fragments :: header()"></th:block>
+			
+	
+			<div class="container-app px-5 py-3 row justify-content-center align-items-stretch flex-nowrap" >
+				
+				<!-- Aside NavBar --> 
+				<th:block th:replace="fragments :: asideNav(${routeName})"></th:block>
+				
+				<main class="col-9">
+					<div th:if="${!ingredients.isEmpty()}" >
+				
+						<!--  main title -->
+						<th:block th:replace="fragments :: mainTitle(${routeName})"></th:block>  
+				
+						<!-- Create new promo -->
+						<form
+							action="/ingredients/store"
+							method="POST"
+							class="text-center py-3 d-flex vertical-align-middle justify-content-stretch">
+							
+							
+							<div class="mx-5 w-50 text-center" th:object="${ingr}">
+								<label for="promo-name" class="fw-bold d-block">Crea un nuovo ingrediente: </label>
+								<span class="d-flex align-items-center justify-content-center my-5">
+									<input type="text" name="name" id="promo-name" th:field="*{name}" placeholder="Inserisci il nome dell'ingrediente" class="w-50"/>
+									<input type="submit" value="Crea" class="btn btn-primary mx-3"/>
+								</span>
+							</div>
+							
+							<div class="mx-5" style="width:30%;">
+							
+								<label class="d-block my-3">Seleziona le pizze a cui associare l'ingrediente:</label>				
+								
+								<div th:each="pizza : ${pizzas}"  class="d-inline-block text-center mx-2 my-2">
+			
+										
+									<input type="checkbox"  
+										value="${pizza.id}" 
+										name="pizza_id" />
+										
+									<label class="fw-bold d-inline-block">[[${pizza.name}]]</label>
+	
+									
+								</div>
+							</div>
+						</form>		
+						
+						<!-- Validation msg -->
+						<th:block th:replace="fragments :: successMsg(${successMsg})"></th:block>
+		
+						<!-- Promotions -->
+						<table class="py-3 table table-dark table-striped text-start">
+							<thead>
+								<tr style="position:sticky;top:0;width:100%;border-bottom:1px solid #fff;transition:all 0.5s linear;">
+									<th>Nome</th>
+									<th>Pizze Associate</th>
+									<th colspan="2" class="text-center">Azioni:</th>
+								</tr>
+							</thead>
+							<tbody>		
+								<tr th:each="ingredient : ${ingredients}" th:object="${ingredient}">	
+									<td class="text-capitalize" th:text="*{name}"></td>
+									<td class="text-capitalize" >
+										<ul class="list-unstyled">
+											<li th:each="pizza : ${ingredient.getPizzas()}" th:text="${pizza.name} + ','"/> <li>
+										</ul>
+									</td>
+									<!-- Buttons -->	
+									<td style="width:10%">
+										<a th:href="@{/ingredients/update/{id}(id=${ingredient.id})}" class="btn btn-success">Modifica</a>
+									</td>
+									<td  style="width:10%">
+										<a th:href="@{/ingredients/delete/{id}(id=${ingredient.id})}" class="btn btn-danger">Elimina</a>
+									</td>
+								</tr>
+							</tbody>
+						</table> 
+					</div>
+				
+					<h2 th:if="${ingredients.isEmpty()}">Nessuna promozione presente</h2>
+				
+				</main>	
+			</div>					
+		</div>
+					
+		<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>	
+	</body>
+</html>

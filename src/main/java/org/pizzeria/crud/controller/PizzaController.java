@@ -3,8 +3,10 @@ package org.pizzeria.crud.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
+import org.pizzeria.crud.serv.IngredientService;
 import org.pizzeria.crud.serv.PizzaService;
 import org.pizzeria.crud.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +32,20 @@ public class PizzaController {
 
 	@Autowired
 	private PromotionService promotionService;
+	
+	@Autowired
+	private IngredientService ingredientService;
 
 // index
 	@GetMapping
 	public String index(Model model) {
 		
 		List<Pizza> pizzas = pizzaService.findAll();
+		List<Ingredient> ingredients = ingredientService.findAll();
+		
 		model.addAttribute("obj", pizzas);
+		model.addAttribute("ingredients", ingredients);
+
 		model.addAttribute("routeName", "pizza");
 		model.addAttribute("type", "display");
 		model.addAttribute("objNm", "pizza");

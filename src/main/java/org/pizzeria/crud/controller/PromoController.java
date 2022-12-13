@@ -65,7 +65,7 @@ public class PromoController {
 		
 		List<Pizza> promotionPizzas = promotion.getPizzas();
 
-			promotion.setPizzas(promotionPizzas);
+		promotion.setPizzas(promotionPizzas);
 		
 		promotionService.save(promotion);
 		
