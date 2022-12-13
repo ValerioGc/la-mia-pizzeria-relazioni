@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +28,8 @@ public class PizzaController {
 	@Autowired
 	private PizzaService pizzaService;
 
+	@Autowired
+	private PromotionService promotionService;
 
 // index
 	@GetMapping
@@ -37,6 +38,8 @@ public class PizzaController {
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("obj", pizzas);
 		model.addAttribute("routeName", "pizza");
+		model.addAttribute("type", "display");
+		model.addAttribute("objNm", "pizza");
 		
 		return "CRUDtemplates/pizzas-drinks/index";
 	}
@@ -65,8 +68,12 @@ public class PizzaController {
 	@GetMapping("/pizza/create")
 	public String getCreatePizza(Model model) {
 		
+		
+		List<Promotion> promotions = promotionService.findAll(); 
 		Pizza pizza = new Pizza();
+		
 		model.addAttribute("obj", pizza);
+		model.addAttribute("promo", promotions);
 		
 		model.addAttribute("routeName", "new");
 		model.addAttribute("element", "pizza");
@@ -77,8 +84,7 @@ public class PizzaController {
 	
 	@PostMapping("/pizza/create")
 	public String storePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-	
-		
+
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			return "redirect:/pizza/create";
@@ -94,9 +100,12 @@ public class PizzaController {
 	@GetMapping("/pizza/update/{id}")
 	public String getPizzaUpdate(@PathVariable("id") int id, Model model) {
 		
+		
 		Optional<Pizza> optPizza = pizzaService.findPizzaById(id);
 		Pizza pizza = optPizza.get();
-		
+		List<Promotion> promotions = promotionService.findAll(); 
+
+		model.addAttribute("promo", promotions);
 		model.addAttribute("obj", pizza);
 		
 		model.addAttribute("routeName", "edit");

@@ -23,8 +23,40 @@
 					<th:block th:replace="fragments :: successMsg(${successMsg})"></th:block>
 
 				
-					<!--  Index Table -->
-					<th:block th:replace="fragments :: table(${obj}, ${routeName}, 'display')"></th:block>
+<table 
+	   class="py-3 table table-dark table-striped text-start">
+	<thead>
+		<tr style="position:sticky;top:0;width:100%;border-bottom:1px solid #fff;transition:all 0.5s linear;">
+			<th>Nome</th>
+			<th>Descrizione</th>
+			<th>Promozione</th>
+			<th class="text-start">Prezzo</th>
+			<th colspan="3" class="text-center" th:if="${type} == 'display'">Azioni:</th>
+		</tr>
+	</thead>
+	<tbody>		
+		<tr th:each="drink : ${obj}" th:object="${drink}">			 
+			<td class="text-capitalize" th:text="*{name}"></td>
+			<td class="text-capitalize" th:text="*{description}"></td>
+			<td th:each="promo : ${drink.getPromotion()}">[[${drink.getPromotion().name}]]</td>
+			<td style="width:15%" th:text="*{price} +  ' &euro;'"></td>
+			
+			<span th:if="${type} == 'display'">
+				<td style="width:10%">
+ 					<a class="btn btn-primary" th:href="@{'/' + ${objNm} + '/{id}' (id=${drink.id})}">Dettagli</a> 
+				</td>
+				<td style="width:10%">
+					<a th:href="@{'/' + ${objNm} + '/update/{id}'(id=${drink.id})}" class="btn btn-success">Modifica</a>
+				</td>
+				<td  style="width:10%">
+					<a th:href="@{'/' + ${objNm} + '/delete/{id}'(id=${drink.id})}" class="btn btn-danger">Elimina</a>
+				</td>
+			</span>
+		
+		</tr>
+	</tbody>
+</table> 
+
 				</main>	
 			</div>		
 			

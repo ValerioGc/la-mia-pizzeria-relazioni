@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
+import org.pizzeria.crud.serv.PizzaService;
 import org.pizzeria.crud.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class PromoController {
 	private PromotionService promotionService;
 	
 	@Autowired
-	PromotionService pizzaService;
+	private PizzaService pizzaService;
 	
 //  Index
 	@RequestMapping("/index")
@@ -34,7 +35,7 @@ public class PromoController {
 		
 		List<Promotion> promos = promotionService.findAll();
 
-		List<Promotion> pizzas = pizzaService.findAll();
+		List<Pizza> pizzas = pizzaService.findAll();
 		
 		model.addAttribute("promos", promos);
 		model.addAttribute("pizzas", pizzas);
@@ -45,17 +46,32 @@ public class PromoController {
 		
 		return "CRUDtemplates/promo/index";
 	}
-	
 
-// Store 
-	@PostMapping("/store")
-	public String storePromo(@Valid Promotion promotion) {
+// create
+	@GetMapping("/create")
+	public String getPromotionCreate(Model model) {
 		
-		System.out.println(promotion);
+		Promotion promotion = new Promotion();
+		List<Pizza> pizzas = pizzaService.findAll();
+		model.addAttribute("promotion", promotion);
+		model.addAttribute("pizzas", pizzas);
 		
-		return "redirect:/promos/index";
+		return "promotion-create";
 	}
 	
+// Store 
+	@PostMapping("/store")
+	public String storePromotion(@Valid Promotion promotion) {
+		
+		List<Pizza> promotionPizzas = promotion.getPizzas();
+
+			promotion.setPizzas(promotionPizzas);
+		
+		promotionService.save(promotion);
+		
+		return "redirect:/promotion/index";
+	}
+
 
 // Edit
 	@GetMapping("/update/{id}")
@@ -65,7 +81,7 @@ public class PromoController {
 		Promotion promotion = optPromo.get();
 		
 	
-		List<Promotion> pizzas = pizzaService.findAll();
+		List<Pizza> pizzas = pizzaService.findAll();
 		
 		model.addAttribute("promo", promotion);
 		model.addAttribute("pizzas", pizzas);
