@@ -22,9 +22,39 @@
 					<!-- Error message -->
 					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
 
-					<!-- Form -->
-					<th:block th:replace="fragments :: formM('POST', ${action}, ${obj})"></th:block>
-			
+					
+				<!-- 	<th:block th:replace="fragments :: formM('POST', ${action}, ${obj})"></th:block> -->
+								
+					<form 
+						  method="POST" th:action="${action}" 
+						  class="card p-5 my-5 w-50 m-auto" 
+						  th:object="${obj}">
+					
+						<input type="text" name="id" th:field="*{id}" style="display:none">
+					
+						<label for="pName" class="pt-3 pb-1 fw-bold">Nome</label>
+						<input type="text" id="pName" name="pName" th:field="*{name}" />
+						
+						<label for="pDesc" class="pt-3 pb-1 fw-bold">Descrizione</label>
+						<input type="text" id="pDesc" name="pDesc" th:field="*{description}"/>
+						
+						<label for="pPrice" class="pt-3 pb-1 fw-bold">Prezzo</label>
+						<input type="number" id="pPrice" name="pPrice" th:field="*{price}"/>
+
+					<label>Promozioni:</label>
+					<select name="promotion" class="mb-3">
+						<option
+							th:each="promotion : ${promo}"
+							th:object="${promotion}"
+							
+							th:value="*{id}"
+							th:field="${obj.promotion}"
+						>
+							[[*{name}]]
+						</option>
+					</select>
+		<button type="submit" class="btn btn-success mx-auto w-25 my-4">Conferma</button>
+</form>
 				</main>	
 			</div>		
 		</div>

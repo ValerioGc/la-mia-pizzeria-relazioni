@@ -100,7 +100,8 @@ public class PromoController {
 		}
 		
 		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
-		pizzaService.save(promotion);
+		
+		promotionService.save(promotion);
 		
 		return "redirect:/promos/index";
 	}
