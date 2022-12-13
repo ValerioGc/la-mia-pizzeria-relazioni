@@ -4,11 +4,11 @@ package org.pizzeria.crud;
 import java.util.List;
 
 import org.pizzeria.crud.pojo.Drink;
-import org.pizzeria.crud.pojo.Ingredients;
+import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
 import org.pizzeria.crud.serv.DrinkService;
-import org.pizzeria.crud.serv.IngredientsService;
+import org.pizzeria.crud.serv.IngredientService;
 import org.pizzeria.crud.serv.PizzaService;
 import org.pizzeria.crud.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,8 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	private PromotionService promotionService;
 	
 	@Autowired
-	private IngredientsService ingredientsService;
+	private IngredientService ingredientService;
+
 	
 	
 	public static void main(String[] args) {
@@ -62,14 +63,14 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		Pizza p3 = new Pizza("quattro formaggi", "lorem ipsum", 12, prom5);
 		Pizza p4 = new Pizza("margherita", "lorem pizzum", 6, prom3);
 		Pizza p5 = new Pizza("capricciosa", "lorem pizzum", 6, prom4);
-		Pizza p6 = new Pizza("bu", "lorem pizzum", 15, prom3);
+		Pizza p6 = new Pizza("bufala light", "lorem pizzum", 15, prom3);
 		Pizza p7 = new Pizza("norcina", "lorem pizzum", 17, prom5);
 		Pizza p8 = new Pizza("crostino", "lorem ipsum", 12, prom3);
 		Pizza p9 = new Pizza("margherita con bufala", "lorem pizzum", 16, prom1);
 		Pizza p10 = new Pizza("diavola", "lorem pizzum", 19, prom5);
 		Pizza p11 = new Pizza("noci e pere", "lorem ipsum", 12, prom1);
 		Pizza p12= new Pizza("margherit con bufala", "lorem pizzum", 16, prom2);
-		Pizza p13 = new Pizza("diavol", "lorem pizzum", 19, prom5);
+		Pizza p13 = new Pizza("margherita light", "lorem pizzum", 19, prom5);
 		
 		pizzaService.save(p1);
 		pizzaService.save(p2);
@@ -108,15 +109,16 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		drinkService.save(d9);
 		drinkService.save(d10);
 		
+		// Ingredients
 		
+		Ingredient i1 = new Ingredient("farina");
+		Ingredient i2 = new Ingredient("pomodoro");
+		Ingredient i3 = new Ingredient("acqua");
 		
-		Ingredients i1 = new Ingredients("farina");
-		Ingredients i2 = new Ingredients("pomodoro");
-		Ingredients i3 = new Ingredients("acqua");
+		ingredientService.save(i1);
+		ingredientService.save(i2);
+		ingredientService.save(i3);
 		
-		ingredientsService.save(i1);
-		ingredientsService.save(i2);
-		ingredientsService.save(i3);
 		
 // ----------------------------------------------------- TEST ---------------------------------------------------
 	
@@ -129,7 +131,10 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		List<Pizza> pizzasT = pizzaService.findAll();
 		
 		for(Pizza pizza : pizzasT) {
-				System.out.println("----------- Result pizzas---------------\n" + pizza + "\n" + pizza.getPromotion());
+				System.out.println("----------- Result pizzas---------------\n" 
+									+ pizza 
+									+ "\n" + pizza.getPromotion()
+									+ "\nIngredienti: " );
 		}
 		
 		
@@ -152,8 +157,13 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 
 		
 
-		System.out.println("ingrediente: " + i1.getName());
-		System.out.println("ingrediente: " + i2.getName());
-		System.out.println("ingrediente: " + i3.getName());
+		
+
+
+		System.err.println("---------------------------");
+		List<Ingredient> ingredients = ingredientService.findAllIngredients();
+		for (Ingredient ing : ingredients) {
+			System.err.println(ing +  " | Pizze: " + "\n" + ing.getPizzas());
+		}
 	}
 }

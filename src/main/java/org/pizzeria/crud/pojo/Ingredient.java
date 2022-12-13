@@ -1,21 +1,29 @@
 package org.pizzeria.crud.pojo;
 
-import org.pizzeria.crud.repo.IngredientsRepo;
-import org.pizzeria.crud.serv.IngredientsService;
+import java.util.List;
+
+import org.pizzeria.crud.repo.IngredientRepo;
+import org.pizzeria.crud.serv.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table
-public class Ingredients {
+public class Ingredient {
 
 
 	@Id
@@ -29,12 +37,27 @@ public class Ingredients {
 	private String name;
 	
 	
+	@ManyToMany(mappedBy = "ingredients", cascade = CascadeType.REMOVE)
+	private List<Pizza> pizzas;
 	
-	public Ingredients() { }
-	public Ingredients(String name) {
+	public Ingredient() { }
+	public Ingredient(String name) {
 		setName(name);
 	}
+	public Ingredient(String name, List<Pizza> pizzas) {
+		this(name);
+		setPizzas(pizzas);
+	}
 
+	
+	public List<Pizza> getPizzas() {
+		return pizzas;
+	}
+	public void setPizzas(List<Pizza> pizzas) {
+		this.pizzas = pizzas;
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
