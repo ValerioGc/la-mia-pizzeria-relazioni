@@ -3,6 +3,7 @@ package org.pizzeria.crud.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
 import org.pizzeria.crud.serv.PizzaService;
@@ -105,8 +106,7 @@ public class PromoController {
 		
 		model.addAttribute("routeName", "editPromo");
 		model.addAttribute("element", "promozione");
-		
-		model.addAttribute("action", "/promos/update/{id}");
+		model.addAttribute("action", "promos");
 		
 		return "CRUDtemplates/ingredients-promo/edit";
 	}
@@ -128,6 +128,16 @@ public class PromoController {
 		redirectAttributes.addFlashAttribute("successMsg", "Modifica effettuata con successo");
 		
 		// ---------------------------------------------------------------------------------------
+		
+		Promotion promOl = promotionService.findPromotionById(id).get();
+		
+		for (Pizza pizza : promOl.getPizzas()) {
+			pizza.getIngredients().remove(promOl);
+		}
+		
+		for (Pizza pizza : promotion.getPizzas()) {
+			pizza.setPromotion(promotion);
+		}
 		
 		promotionService.save(promotion);
 		

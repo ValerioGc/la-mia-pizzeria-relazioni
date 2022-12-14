@@ -24,7 +24,7 @@
 				
 					<!-- Edit Form -->
 					<form  method="POST" 
-						   th:action="${action}" 
+						   th:action="@{'/' + ${action}  + '/update/{id}' (id=*{id})}" 
 					       class="card p-5 my-5 w-50 m-auto" >
 					  
 				  		<!-- Ingredients/Promos -->
@@ -37,8 +37,17 @@
 							<input type="text" id="name" name="name" th:field="*{name}" class="mb-3">
 						
 							<!-- Date -->
-							<input th:if="${routeName} == 'editPromo'" type="date" name="startDate" th:field="*{startDate}" placeholder="Inserisci la data di inizio della promo" class="w-50"/>
-							<input th:if="${routeName} == 'editPromo'" type="date" name="endDate" th:field="*{endDate}" placeholder="Inserisci la data di termine della promo" class="w-50"/>
+							<input th:if="${routeName} == 'editPromo'" 
+									type="date" name="startDate" 
+									th:field="*{startDate}"
+									placeholder="Inserisci la data di inizio della promo" 
+									class="w-50"/>
+							
+							<input th:if="${routeName} == 'editPromo'" 
+									 type="date" name="endDate" 
+									 th:field="*{endDate}"
+									 placeholder="Inserisci la data di termine della promo" 
+									 class="w-50"/>
 						
 						</div>
 									
