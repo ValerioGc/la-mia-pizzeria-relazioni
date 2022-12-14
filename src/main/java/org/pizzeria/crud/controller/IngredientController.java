@@ -83,7 +83,7 @@ public class IngredientController {
 		model.addAttribute("pizzas", pizzas);
 		
 		model.addAttribute("routeName", "edit");
-		
+		model.addAttribute("element", "ingrediente");
 		return "CRUDtemplates/ingredients/edit";
 	}
 	

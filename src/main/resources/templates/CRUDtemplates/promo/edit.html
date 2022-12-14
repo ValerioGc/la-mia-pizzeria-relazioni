@@ -31,21 +31,25 @@
 						
 						<div class="mx-5  my-4 text-center">
 						
+							<input type="number" name="id" th:field="*{id}" class="d-none">
 							<label for="promo-name" class="fw-bold d-block">Modifica una nuova promo: </label>
 							
 							<input type="text" name="name" th:field="*{name}" id="promo-name" placeholder="Inserisci il nome della promo" class="w-50"/>
+							<input type="date" name="startDate" th:field="*{startDate}" placeholder="Inserisci la data di inizio della promo" class="w-50"/>
+							<input type="date" name="endDate" th:field="*{endDate}" placeholder="Inserisci la data di termine della promo" class="w-50"/>
 					
 							<input type="submit" value="Modifica" class="btn btn-primary mx-3"/>
 											
 							<div
-								th:each="pizza : ${promo.getPizzas()}"
+								th:each="pizza : ${pizzas}"
 								th:object="${pizza}">
+								
 								<input 
 									type="checkbox" 
 									name="borrowings" 
 									
 									th:value="*{id}" 
-									th:field="${promo.pizza}">
+									th:field="${promo.pizzas}">
 								<label>[[*{name}]]</label>
 				
 							</div>

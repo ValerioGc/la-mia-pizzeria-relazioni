@@ -127,12 +127,7 @@ public class PizzaController {
 	@PostMapping("/pizza/update")
 	public String updatePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		if(bindingResult.hasErrors()) {
-			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-			return "redirect:/pizza/update/" + pizza.getId();
-		}
-		
-		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
+
 		pizzaService.save(pizza);
 		
 		return "redirect:/";

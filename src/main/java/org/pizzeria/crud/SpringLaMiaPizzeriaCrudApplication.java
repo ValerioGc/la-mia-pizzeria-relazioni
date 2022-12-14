@@ -1,6 +1,7 @@
 package org.pizzeria.crud;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +59,12 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		ingredientService.save(i6);
 		
 	// Promo
-		Promotion prom1 = new Promotion("2022-10-12", "2022-12-12", "promo1");
-		Promotion prom2 = new Promotion("2023-04-01", "2023-05-01","promo2" );
-		Promotion prom3 = new Promotion("2022-12-24", "2023-01-15", "promo3");
-		Promotion prom4 = new Promotion("2022-12-24", "2023-01-15", "promo4");
-		Promotion prom5 = new Promotion("2022-12-24", "2023-01-15", "promo5");
-		Promotion prom6 = new Promotion("2022-12-24", "2023-01-15", "promo6");
+		Promotion prom1 = new Promotion("Sconto 10%", LocalDate.parse("2022-10-12"), LocalDate.parse("2022-12-12") );
+		Promotion prom2 = new Promotion("Sconto 20%", LocalDate.parse("2023-04-01"), LocalDate.parse("2023-05-01") );
+		Promotion prom3 = new Promotion("Sconto 30%", LocalDate.parse("2022-12-24"), LocalDate.parse("2023-01-15") );
+		Promotion prom4 = new Promotion("Sconto 40%", LocalDate.parse("2022-12-24"), LocalDate.parse("2023-01-15") );
+		Promotion prom5 = new Promotion("Promo 2 x 1", LocalDate.parse("2022-12-24"), LocalDate.parse("2023-01-15") );
+		Promotion prom6 = new Promotion("consegna gratuita", LocalDate.parse("2022-12-24"), LocalDate.parse("2023-01-15") );
 		
 		promotionService.save(prom1);
 		promotionService.save(prom2);
@@ -93,15 +94,15 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		Pizza p2 = new Pizza("boscaiola", "lorem pizzum", 7, prom2, ing2);
 		Pizza p3 = new Pizza("quattro formaggi", "lorem ipsum", 12, prom5, ing3);
 		Pizza p4 = new Pizza("margherita", "lorem pizzum", 6, prom3, ing2);
-		Pizza p5 = new Pizza("capricciosa", "lorem pizzum", 6, prom4, ing3);
+		Pizza p5 = new Pizza("capricciosa", "lorem pizzum", 6, prom6, ing3);
 		Pizza p6 = new Pizza("bufala light", "lorem pizzum", 15, prom3,ing1);
-		Pizza p7 = new Pizza("norcina", "lorem pizzum", 17, prom5,ing2);
+		Pizza p7 = new Pizza("norcina", "lorem pizzum", 17, prom6,ing2);
 		Pizza p8 = new Pizza("crostino", "lorem ipsum", 12, prom3,ing3);
 		Pizza p9 = new Pizza("margherita con bufala", "lorem pizzum", 16, prom1,ing1);
 		Pizza p10 = new Pizza("diavola", "lorem pizzum", 19, prom5);
 		Pizza p11 = new Pizza("noci e pere", "lorem ipsum", 12, prom2,ing3);
 		Pizza p12= new Pizza("margherit con bufala", "lorem pizzum", 16, prom2);
-		Pizza p13 = new Pizza("margherita light", "lorem pizzum", 19, prom5);
+		Pizza p13 = new Pizza("margherita light", "lorem pizzum", 19);
 		
 		pizzaService.save(p1);
 		pizzaService.save(p2);

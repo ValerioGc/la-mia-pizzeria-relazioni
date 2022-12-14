@@ -25,25 +25,26 @@ public class Promotion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(unique = true)
+	@NotEmpty(message = "Il titolo non può essere vuoto")
+	@NotNull(message = "Il titolo non può essere null")
+	private String name;
+
 	@NotNull(message = "La data non può essere vuota")
 	private LocalDate startDate;
 	
 	@NotNull (message = "La data non può essere vuota")
 	private LocalDate endDate;
 	
-	@Column(unique = true)
-	@NotEmpty(message = "Il titolo non può essere vuoto")
-	@NotNull(message = "Il titolo non può essere null")
-	private String name;
 	
 	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<Pizza> pizzas;
 	
 	public Promotion() { }
-	public Promotion(String startDate, String endDate, String name) {
+	public Promotion(String name, LocalDate startDate, LocalDate endDate ) {
+		setName(name);
 		setStartDate(startDate);
 		setEndDate(endDate);
-		setName(name);
 	}
 	
 	
@@ -59,18 +60,17 @@ public class Promotion {
 	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
-		LocalDate lsDt = LocalDate.parse(startDate);
-		this.startDate = lsDt;
+	public void setStartDate(LocalDate startDate) {
+
+		this.startDate = startDate;
 	}
 
 //  End date
 	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
-		LocalDate leDt = LocalDate.parse(endDate);
-		this.endDate = leDt;
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
 	
 // Title
