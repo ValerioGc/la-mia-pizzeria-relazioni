@@ -3,12 +3,13 @@ package org.pizzeria.crud.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
 import org.pizzeria.crud.pojo.Promotion;
-import org.pizzeria.crud.serv.IngredientService;
+import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.serv.PizzaService;
 import org.pizzeria.crud.serv.PromotionService;
+import org.pizzeria.crud.serv.IngredientService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,14 +37,15 @@ public class PizzaController {
 	@Autowired
 	private IngredientService ingredientService;
 
-// home
+//  Home ------------------------------------------------------------------
 	@GetMapping
 	public String goHome(Model model) {
 		model.addAttribute("routeName", "home");
 		return "home" ;
 	}
 
-// index
+	
+//  Index -----------------------------------------------------------------
 	@GetMapping("/pizza/index")
 	public String index(Model model) {
 		
@@ -58,12 +60,11 @@ public class PizzaController {
 		model.addAttribute("objN", "pizza");
 		model.addAttribute("typeRel", "ty1");
 		
-		
 		return "CRUDtemplates/pizzas-drinks/index";
 	}
 	
 	
-// Show
+//  Show ------------------------------------------------------------------
 	@GetMapping("/pizza/{id}")
 	public String getPizza(@PathVariable("id") int id, Model model) {
 		
@@ -73,10 +74,12 @@ public class PizzaController {
 		
 		model.addAttribute("routeName", "show");
 		model.addAttribute("element", "pizza");
+		
 		return "CRUDtemplates/pizzas-drinks/show";
 	}
 	
-// Create	
+	
+//  Create ----------------------------------------------------------------
 	@GetMapping("/pizza/create")
 	public String getCreatePizza(Model model) {
 		
@@ -97,7 +100,7 @@ public class PizzaController {
 		return "CRUDtemplates/pizzas-drinks/new";
 	}
 	
-// Store
+// Store 
 	@PostMapping("/pizza/store")
 	public String storePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
@@ -113,12 +116,15 @@ public class PizzaController {
 	}
 	
 	
-// Edit
+// Edit ----------------------------------------------------------------
 	@GetMapping("/pizza/edit/{id}")
-	public String getPizzaUpdate(@PathVariable("id") int id, Model model) {
+	public String editPizza(@PathVariable("id") int id, Model model) {
 		
 		List<Promotion> promotions = promotionService.findAll(); 
 		model.addAttribute("promo", promotions);
+		
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredients", ingredients);
 		
 		Optional<Pizza> optPizza = pizzaService.findPizzaById(id);
 		Pizza pizza = optPizza.get();
@@ -126,40 +132,46 @@ public class PizzaController {
 		
 		model.addAttribute("routeName", "edit");
 		model.addAttribute("element", "pizza");
-		model.addAttribute("action", "/pizza/update");
 		
 		return "CRUDtemplates/pizzas-drinks/edit";
 	}
-
+	
+//  Update ----------------------------------------------------------------
 	@PostMapping("/pizza/update")
 	public String updatePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {		
 
+	// --------------------------------- Errors & Msg --------------------------------------	
+
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-			return "redirect:/pizza/update/" + pizza.getId();
+			return "redirect:/pizza/edit/" + pizza.getId();
 		}
 		
 		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
 		
+	// -------------------------------------------------------------------------------------	
+
 		pizzaService.save(pizza);
 		
-		return "redirect:/";
+		return "redirect:/pizza/index";
 	}
 	
 	
-// Delete
+// Delete ----------------------------------------------------------------
 	@GetMapping("/pizza/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
 		
 		pizzaService.deletePizzaById(id);
 		
-		return "redirect:/";
+		return "redirect:/pizza/index";
 	}
 	
 	
-// Search
+// Search ----------------------------------------------------------------
 	@GetMapping("/pizza/search")
-	public String getSearchPizzaByName(Model model, @RequestParam(name = "query", required = false) String query) {
+	public String getSearchPizzaByName(Model model, 
+										@RequestParam(name = "query", required = false) 
+										String query) {
 		
 		List<Pizza> pizzas = query == null ? pizzaService.findAll() : pizzaService.findByName(query);
 		model.addAttribute("obj", pizzas);
@@ -169,8 +181,6 @@ public class PizzaController {
 		model.addAttribute("element", "pizza");
 		model.addAttribute("typeRel", "ty1");
 		
-		
 		return "SRCtemplates/search";
 	}
-
 }

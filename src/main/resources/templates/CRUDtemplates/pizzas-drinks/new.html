@@ -31,47 +31,44 @@
 						  th:object="${obj}">
 					
 						<input type="text" name="id" th:field="*{id}" style="display:none">
-					
+						
+						<!-- Name -->
 						<label for="pName" class="pt-3 pb-1 fw-bold">Nome</label>
 						<input type="text" id="pName" name="pName" th:field="*{name}" />
 						
+						<!-- Description -->
 						<label for="pDesc" class="pt-3 pb-1 fw-bold">Descrizione</label>
 						<input type="text" id="pDesc" name="pDesc" th:field="*{description}"/>
 						
+						<!-- Price -->
 						<label for="pPrice" class="pt-3 pb-1 fw-bold">Prezzo</label>
 						<input type="number" id="pPrice" name="pPrice" th:field="*{price}"/>
 
-					<label>Promozioni:</label>
-					<select name="promotion" class="mb-3">
-						<option
-							th:each="promotion : ${promo}"
-							th:object="${promotion}"
-							
-							th:value="*{id}"
-							th:field="${obj.promotion}"
-						>
-							[[*{name}]]
-						</option>
-					</select>
+						<!-- Promo -->
+						<label>Promozioni:</label>
+						<select name="promotion" class="mb-3">
+							<option	th:each="promotion : ${promo}" th:object="${promotion}"
+								th:value="*{id}" th:field="${obj.promotion}">
+									[[*{name}]]
+							</option>
+						</select>
+						
+						<!-- Ingredients -->
+						<span th:if="${ingredients}" >
+							<label>Ingredienti:</label>
+							<span th:each="ingr : ${ingredients}">
 					
-					<span th:if="${ingredients}" >
-						<label>Ingredienti:</label>
-						
-						<span th:each="ingr : ${ingredients}">
-						
-							<input type="checkbox" name="ingredient" 
-									th:value="${ingr.id}"
-									class="mb-3">
-	
-							<label class="fw-bold d-inline-block">[[${ingr.name}]]</label>	
+								<input type="checkbox" name="ingredient" 
+										th:value="${ingr.id}"
+										class="mb-3">
+		
+								<label class="fw-bold d-inline-block">[[${ingr.name}]]</label>	
+					
+							</span>
 						</span>
-							
-
-					</span>
-					
-					
-		<button type="submit" class="btn btn-success mx-auto w-25 my-4">Conferma</button>
-</form>
+						
+						<button type="submit" class="btn btn-success mx-auto w-25 my-4">Conferma</button>
+					</form>
 				</main>	
 			</div>		
 		</div>
