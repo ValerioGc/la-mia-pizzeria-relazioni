@@ -34,34 +34,20 @@ public class IngredientController {
 	public String index(Model model) {
 		
 		List<Ingredient> ingredients = ingredientService.findAllPizzas();
-		List<Pizza> pizzas = pizzaService.findAll();
-		
 		model.addAttribute("ingredients", ingredients);
-		model.addAttribute("pizzas", pizzas);
-		
-		model.addAttribute("routeName", "ingredients");
-		model.addAttribute("type", "display");
 
+		List<Pizza> pizzas = pizzaService.findAll();
+		model.addAttribute("pizzas", pizzas);
 		
 		Ingredient ingr = new Ingredient();
 		model.addAttribute("ingr", ingr);
 		
+		model.addAttribute("routeName", "ingredients");
+		model.addAttribute("type", "display");
+			
 		return "CRUDtemplates/ingredients/index";
 	}
 	
-	
-// Create
-	@GetMapping("/create")
-	public String createIngredient(Model model) {
-		
-		Ingredient ingredient = new Ingredient();
-		List<Pizza> pizzas = pizzaService.findAll();
-		
-		model.addAttribute("ingredient", ingredient);
-		model.addAttribute("pizzas", pizzas);
-		
-		return "CRUDtemplates/ingredients/new";
-	}
 // Store
 	@PostMapping("/store")
 	public String storeIngredient(@Valid Ingredient ingredient) {
