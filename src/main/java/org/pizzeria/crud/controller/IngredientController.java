@@ -73,11 +73,34 @@ public class IngredientController {
 	
 
 // Edit
-
-	
+	@GetMapping("/edit/{id}")
+	public String editIngredient(@PathVariable("id") int id, Model model) {
+		
+		Ingredient ingr = ingredientService.findIngredientById(id).get();
+		model.addAttribute("ingr", ingr);
+		
+		List<Pizza> pizzas = pizzaService.findAll();
+		model.addAttribute("pizzas", pizzas);
+		
+		model.addAttribute("routeName", "edit");
+		
+		return "CRUDtemplates/ingredients/edit";
+	}
 	
 // Update
-	
+	@PostMapping("/update")
+	public String updateIngredient(@Valid Ingredient ingredient) {
+		
+		List<Pizza> ingredientP = ingredient.getPizzas();
+		
+		for (Pizza pizza : ingredientP) {
+			pizza.getIngredients().add(ingredient);
+		}
+		
+		ingredientService.save(ingredient);
+		
+		return "redirect:/ingredients";
+	}
 	
 	
 // Delete
