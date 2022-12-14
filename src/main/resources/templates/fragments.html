@@ -145,14 +145,14 @@
 <!---------------------- Details Section ---------------------->
 
 <div th:fragment="detailsSection(obj, element)" 
-     th:object="${obj}" class="card p-5 border-2 m-auto w-50 mt-5">
+     th:object="${obj}" class="card p-4 border-2 mx-auto mb-3 w-50 mt-5">
 	
-	<h2 class="text-capitalize py-3 m-auto">
+	<h2 class="text-capitalize py-3 pb-1 m-auto">
 		<i th:class="'mx-2 d-inline-block fa-solid ' + ${element.equals('pizza') ? 'fa-pizza-slice':'fa-martini-glass'}"></i>
 		[[${element}]]:
 	</h2>
 	
-	<ul class="mt-3 mb-5 list-unstyled">			 
+	<ul class="mt-3 list-unstyled">			 
 		<li class="pt-2 text-capitalize d-flex justify-content-between align-items-center">
 			<span><strong>Nome:</strong> [[*{name}]]</span>
 			<span><strong>Prezzo:</strong> [[*{price}]] &euro;</span>
@@ -171,20 +171,27 @@
 	<!-- Promotions -->
 	<div class="w-50">
 		<span><strong>Promozioni:</strong></span>
+		
+		<span th:if="!${obj.getPromotion()}"> Nessuna promo associata</span>
+		
 		<span th:each="promo : ${obj.getPromotion()}">
 			[[${promo.name}]]
 		</span>
-		<span th:if="!${obj.getPromotion()}"> Nessuna promo associata</span>
 	</div>
 	
 	<hr/>
 	
 	<!-- Ingredients -->
-	<div class="w-50">
-		<p></strong>Ingredienti:</strong></p>
+	<div class="w-50 mt-1 mb-5">
+		<p><strong>Ingredienti:</strong></p>
+		
 		<p th:if="${element.equals('drink')}">---</p>
 	
-		<span th:if="${element.equals('pizza')}" th:each="ingredient : ${obj.getIngredients()}">[[${ingredient.name}]],</span>
+		<span th:if="${element.equals('pizza')}" >
+			  <span th:each="ingredient : ${obj.getIngredients()}">
+				  	[[${ingredient.name}]], 
+			  </span>
+	  	</span>
 
 	</div>
 	

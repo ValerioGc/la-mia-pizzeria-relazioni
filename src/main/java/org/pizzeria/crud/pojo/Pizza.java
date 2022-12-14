@@ -1,11 +1,8 @@
 package org.pizzeria.crud.pojo;
 
-
-import java.util.List;
 import java.util.Set;
 
 import org.pizzeria.crud.intf.PriceableInt;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -54,25 +50,33 @@ public class Pizza implements PriceableInt {
 	private Set<Ingredient> ingredients;
 	
 	
-	
+// Costruttori
 	public Pizza() { }
+	// Costruttore senza relazioni
 	public Pizza(String name, String description, int price) {
 		setName(name);
 		setDescription(description);
 		setPrice(price);
 	}
-	// con promozioni
-	public Pizza(String name, String description, int price, Promotion promotion) {
+	// Costruttore con promozioni
+	public Pizza(String name, String description, int price, 
+					Promotion promotion) {
+		
 		this(name, description, price);
 		setPromotion(promotion);
 	}
-	// con ingredienti
-	public Pizza(String name, String description, int price, Set<Ingredient> ingredients) {
+	// Costruttore con ingredienti
+	public Pizza(String name, String description, int price, 
+					Set<Ingredient> ingredients) {
+		
 		this(name, description, price);
 		setIngredients(ingredients);
 	}
-	// con ingredienti e promozioni
-	public Pizza(String name, String description, int price, Promotion promotion, Set<Ingredient> ingredients) {
+	// Costruttore con ingredienti e promozioni
+	public Pizza(String name, String description, int price,
+					Promotion promotion, 
+					Set<Ingredient> ingredients) {
+		
 		this(name, description, price, promotion);
 		setIngredients(ingredients);
 	}
@@ -102,7 +106,17 @@ public class Pizza implements PriceableInt {
 		this.description = description;
 	}
 	
-//  promo 
+//  Price
+	@Override
+	public int getPrice() {
+		return price;
+	}
+	@Override
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
+//  Promo 
 	public Promotion getPromotion() {
 		return promotion;
 	}
@@ -110,7 +124,7 @@ public class Pizza implements PriceableInt {
 		this.promotion = promotion;
 	}
 	
-// Ingredients
+//  Ingredients
 	public Set<Ingredient> getIngredients() {
 		return ingredients;
 	}
@@ -118,7 +132,7 @@ public class Pizza implements PriceableInt {
 		this.ingredients = ingredients;
 	}
 	
-// Add ingredients
+//  Add ingredients
 	public void addIngredient(Ingredient ingredient) {
 		
 		boolean finded = false;
@@ -132,17 +146,7 @@ public class Pizza implements PriceableInt {
 			getIngredients().add(ingredient);
 		}
 	}
-	
-// price
-	@Override
-	public int getPrice() {
-		return price;
-	}
 
-	@Override
-	public void setPrice(int price) {
-		this.price = price;
-	}
 	
 	@Override
 	public String toString() {
@@ -150,6 +154,5 @@ public class Pizza implements PriceableInt {
 			+ "\nDescription: " + getDescription()
 			+ "\nPrice: " + getPrice();
 	}
-	
 }
 

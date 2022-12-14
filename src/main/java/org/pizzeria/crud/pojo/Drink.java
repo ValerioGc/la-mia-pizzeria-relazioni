@@ -24,7 +24,6 @@ public class Drink implements PriceableInt{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
 	@Column(unique = true, nullable = false )
 	@NotNull(message = "Il nome della pizza non deve essere vuoto")
 	@NotEmpty(message = "Il nome della pizza non deve essere vuoto")
@@ -43,14 +42,18 @@ public class Drink implements PriceableInt{
 	private Promotion promotion;
 	
 	
+// Costruttori
 	public Drink() { }
+	//Costruttore Senza Relazioni
 	public Drink(String name, String description, int price ) {
 		setName(name);
 		setDescription(description);
 		setPrice(price);
 	}
-	// con promozioni
-	public Drink(String name, String description, int price, Promotion promotion ) {
+	// Costruttore con promozioni
+	public Drink(String name, String description, int price, 
+					Promotion promotion ) {
+		
 		setName(name);
 		setDescription(description);
 		setPrice(price);
@@ -62,7 +65,6 @@ public class Drink implements PriceableInt{
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -82,25 +84,25 @@ public class Drink implements PriceableInt{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+//  Price
+	@Override
+	public int getPrice() {
+		return price;
+	}
+	@Override
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	
-//  promo 
+//  Promo 
 	public Promotion getPromotion() {
 		return promotion;
 	}
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
 	}
-	
-// price
-	@Override
-	public int getPrice() {
-		return price;
-	}
-	
-	@Override
-	public void setPrice(int price) {
-		this.price = price;
-	}
+		
 	
 	@Override
 	public String toString() {
