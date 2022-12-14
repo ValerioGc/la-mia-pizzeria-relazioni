@@ -58,7 +58,9 @@ public class IngredientController {
 	
 // Store
 	@PostMapping("/store")
-	public String storeIngredient(@Valid Ingredient ingredient, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String storeIngredient(@Valid Ingredient ingredient, 
+									BindingResult bindingResult, 
+									RedirectAttributes redirectAttributes) {
 		
 		//---------------------------- Errors & Msg ----------------------------------------------
 		

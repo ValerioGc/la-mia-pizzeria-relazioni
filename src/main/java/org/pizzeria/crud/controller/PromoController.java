@@ -58,24 +58,35 @@ public class PromoController {
 // Store 
 	@PostMapping("/store")
 	public String storePromotion(@Valid Promotion promotion, 
-									BindingResult bindingResult, 
-									RedirectAttributes redirectAttribute) {
+								BindingResult bindingResult, 
+								RedirectAttributes redirectAttributes) {
 		
 		//---------------------------- Errors & Msg ----------------------------------------------
 		
 		if(bindingResult.hasErrors()) {
-			redirectAttribute.addFlashAttribute("errors", bindingResult.getAllErrors());
+			redirectAttributes.addFlashAttribute("errors2", bindingResult.getAllErrors());
 			return "redirect:/promos/index";
 		}
 			
-		redirectAttribute.addFlashAttribute("successMsg", "Promozione creata con successo");
+		redirectAttributes.addFlashAttribute("successMsg", "Promozione creata con successo");
 			
 		// ---------------------------------------------------------------------------------------
 		
-		List<Pizza> promotionPizzas = promotion.getPizzas();
-		promotion.setPizzas(promotionPizzas);
-
-		promotionService.save(promotion);
+		try {
+			
+			List<Pizza> pizze = promotion.getPizzas();
+			
+			for (Pizza pizza : pizze) {
+				
+				pizza.setPromotion(promotion);
+			}
+			
+			promotionService.save(promotion);
+			
+		} catch(Exception error) {
+			
+			redirectAttributes.addFlashAttribute("exception", error.getMessage());
+		}
 		
 		return "redirect:/promos/index";
 	}
