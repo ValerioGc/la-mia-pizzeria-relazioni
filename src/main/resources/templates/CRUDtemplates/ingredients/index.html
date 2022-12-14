@@ -22,13 +22,12 @@
 						<th:block th:replace="fragments :: mainTitle(${routeName})"></th:block>  
 				
 					
+						<!-- Error message -->
+						<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
 										
-					<!-- Create new promo -->
-						<form
-							action="/ingredients/store"
-							method="POST"
-							class="text-center py-3 d-flex vertical-align-middle justify-content-stretch">
-							
+						<!-- Create new ingredient -->
+						<form action="/ingredients/store" method="POST"
+							  class="text-center py-3 d-flex vertical-align-middle justify-content-stretch">
 							
 							<div class="mx-5 w-50 text-center" th:object="${ingr}">
 								<label for="promo-name" class="fw-bold d-block">Crea un nuovo ingrediente: </label>
@@ -41,22 +40,19 @@
 							<div class="mx-5" style="width:30%;">
 							
 								<label class="d-block my-3">Seleziona le pizze a cui associare l'ingrediente:</label>				
-								
+
 								<div th:each="pizza : ${pizzas}"  th:object="${pizza}" class="d-inline-block text-center mx-2 my-2">
-			
-										
-										                        <input 
-                            type="checkbox" 
-                            name="pizzas" 
-                            th:field="${ingr.pizzas}"
-                            th:value="*{id}" 
-                            >
+								
+		                        	<input type="checkbox" name="pizzas" 
+			                        	   th:field="${ingr.pizzas}"
+			                           	   th:value="*{id}">
+			                           
 									<label class="fw-bold d-inline-block">[[*{name}]]</label>
 	
-									
 								</div>
 							</div>
 						</form>		
+						
 						<!-- Validation msg -->
 						<th:block th:replace="fragments :: successMsg(${successMsg})"></th:block>
 		
