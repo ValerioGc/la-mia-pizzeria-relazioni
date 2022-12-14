@@ -32,13 +32,13 @@ public class IngredientController {
 
 
 // Index + edit
-	@GetMapping
+	@GetMapping("/index")
 	public String index(Model model) {
 		
 		List<Ingredient> ingredients = ingredientService.findAllPizzas();
 		model.addAttribute("obj", ingredients);
 		
-	// ------------- Create-------------------------
+		// ------------- Create-------------------------
 		
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("pizzas", pizzas);
@@ -46,48 +46,52 @@ public class IngredientController {
 		Ingredient ingr = new Ingredient();
 		model.addAttribute("objS", ingr);
 		
-	//----------------------------------------------
+		// ----------------------------------------------
 		
 		model.addAttribute("routeName", "Ingrediente");
 		model.addAttribute("type", "display");
 		model.addAttribute("objN", "ingredients");
 		
-		
 		return "CRUDtemplates/ingredients-promo/index";
 	}
 	
+	
 // Store
 	@PostMapping("/store")
-	public String storeIngredient(@Valid Ingredient ingredient,  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String storeIngredient(@Valid Ingredient ingredient, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		//---------------------------- Errors & Msg ----------------------------------------------
 		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-			return "redirect:/ingredients";
+			return "redirect:/ingredients/index";
 		}
 		
-		redirectAttributes.addFlashAttribute("successMsg", "Creazione avvenuta con successo");
+		redirectAttributes.addFlashAttribute("successMsg", "Ingrediente creato con successo");
 		
 		// ---------------------------------------------------------------------------------------
 		
-
 		for (Pizza pizza :  ingredient.getPizzas()) {
 			pizza.getIngredients().add(ingredient);
 		}	
 	
 		ingredientService.save(ingredient);
 	
-		return "redirect:/ingredients";
+		return "redirect:/ingredients/index";
 	}
 	
 
 // Edit
-	@GetMapping("/update/{id}")
+	@GetMapping("/edit/{id}")
 	public String editIngredient(@PathVariable("id") int id, Model model) {
 		
-		Ingredient ingr = ingredientService.findIngredientById(id).get();
+//		Ingredient ingr = ingredientService.findIngredientById(id).get();
+//		model.addAttribute("obj", ingr);
+		
+		Optional<Ingredient> optIngr = ingredientService.findIngredientById(id);
+		Ingredient ingr = optIngr.get();
 		model.addAttribute("obj", ingr);
+		
 		
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("pizzas", pizzas);
@@ -114,7 +118,7 @@ public class IngredientController {
 			return "redirect:/ingredients/edit/" + ingredient.getId();
 		}
 		
-		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
+		redirectAttributes.addFlashAttribute("successMsg", "Modifica effettuata con successo");
 		
 		//----------------------------------------------------------------------------------
 

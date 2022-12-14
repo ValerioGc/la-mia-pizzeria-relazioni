@@ -44,6 +44,7 @@ public class Promotion {
 	private List<Drink> drinks;
 	
 	
+//  Constructor
 	public Promotion() { }
 	public Promotion(String name, LocalDate startDate, LocalDate endDate ) {
 		setName(name);
@@ -77,7 +78,7 @@ public class Promotion {
 		this.endDate = endDate;
 	}
 	
-// Title
+//  Name
 	public String getName() {
 		return name;
 	}
@@ -85,7 +86,7 @@ public class Promotion {
 		this.name = name;
 	}
 	
-// Pizzas
+//  Linked Pizzas
 	public List<Pizza> getPizzas() {
 		return pizzas;
 	}
@@ -93,7 +94,7 @@ public class Promotion {
 		this.pizzas = pizzas;
 	}
 	
-// Drinks
+//  Linked Drinks
 	public List<Drink> getDrinks() {
 		return drinks;
 	}
@@ -101,6 +102,7 @@ public class Promotion {
 		this.drinks = drinks;
 	}
 		
+	
 	@Override
 	public String toString() {
 		return  "Titolo: " + getName() 

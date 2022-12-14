@@ -26,24 +26,21 @@ import jakarta.validation.constraints.NotNull;
 @Table
 public class Ingredient {
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
 	@Column(unique = true, nullable = false )
 	@NotNull(message = "Il nome dell'ingrediente non deve essere vuoto")
 	@NotEmpty(message = "Il nome dell'ingrediente non deve essere vuoto")
-	private String name;
+	private String name;	
 	
 	
 	@ManyToMany(mappedBy = "ingredients", cascade = CascadeType.REMOVE)
 	private List<Pizza> pizzas;
-//	@JoinTable(name="pizza_ingredients", 
-//		       joinColumns =  @JoinColumn(name="ingredient_id"),
-//			   inverseJoinColumns = @JoinColumn(name="pizza_id"))
+
 	
+//  Constructor
 	public Ingredient() { }
 	public Ingredient(String name) {
 		setName(name);
@@ -54,6 +51,7 @@ public class Ingredient {
 	}
 
 	
+//  Linked Pizzas
 	public List<Pizza> getPizzas() {
 		return pizzas;
 	}
@@ -61,13 +59,15 @@ public class Ingredient {
 		this.pizzas = pizzas;
 	}
 	
-	
+//  ID	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+//  Name
 	public String getName() {
 		return name;
 	}
@@ -81,6 +81,7 @@ public class Ingredient {
 		return "\nNome: " + getName();
 	}
 	
+	
 	// Controllo id e unicità
 	@Override
 	public int hashCode() {
@@ -92,10 +93,6 @@ public class Ingredient {
 		if (!(obj instanceof Ingredient)) {
 			return false;
 		}
-		
-		return obj.hashCode() == hashCode();
-		
+		return obj.hashCode() == hashCode();	
 	}
-	
-	
 }
