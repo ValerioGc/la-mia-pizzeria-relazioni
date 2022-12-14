@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.pizzeria.crud.pojo.Drink;
 import org.pizzeria.crud.pojo.Pizza;
-import org.pizzeria.crud.pojo.Promotion;
+
 import org.pizzeria.crud.serv.DrinkService;
 import org.pizzeria.crud.serv.PizzaService;
 import org.pizzeria.crud.serv.PromotionService;
@@ -34,10 +34,11 @@ public class SearchController {
 			String query) {
 		
 		List<Drink> drinks = query == null ? drinkService.findAll() : drinkService.findByName(query);
+		model.addAttribute("drinks", drinks);
+
 		List<Pizza> pizzas = query == null ? pizzaService.findAll() : pizzaService.findByName(query);
-		
 		model.addAttribute("pizzas", pizzas);
- 		model.addAttribute("drinks", drinks);
+		
 		model.addAttribute("query", query);
 		model.addAttribute("routeName", "search");
 		

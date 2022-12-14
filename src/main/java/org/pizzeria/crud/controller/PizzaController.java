@@ -36,29 +36,32 @@ public class PizzaController {
 	@Autowired
 	private IngredientService ingredientService;
 
-// index
-	@GetMapping
-	public String index(Model model) {
-		
-		List<Pizza> pizzas = pizzaService.findAll();
-		List<Ingredient> ingredients = ingredientService.findAll();
-		
-		model.addAttribute("obj", pizzas);
-		model.addAttribute("ingredients", ingredients);
-
-		model.addAttribute("routeName", "pizza");
-		model.addAttribute("type", "display");
-		model.addAttribute("objNm", "pizza");
-		
-		return "CRUDtemplates/pizzas-drinks/index";
-	}
-	
 // home
-	@GetMapping("/home")
+	@GetMapping
 	public String goHome(Model model) {
 		model.addAttribute("routeName", "home");
 		return "home" ;
 	}
+
+// index
+	@GetMapping("/pizza/index")
+	public String index(Model model) {
+		
+		List<Pizza> pizzas = pizzaService.findAll();
+		model.addAttribute("obj", pizzas);
+
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredients", ingredients);
+		
+		model.addAttribute("routeName", "pizza");
+		model.addAttribute("type", "display");
+		model.addAttribute("objNm", "pizza");
+		model.addAttribute("typeRel", "ty1");
+		
+		
+		return "CRUDtemplates/pizzas-drinks/index";
+	}
+	
 	
 // Show
 	@GetMapping("/pizza/{id}")
@@ -67,9 +70,9 @@ public class PizzaController {
 		Optional<Pizza> optPizza = pizzaService.findPizzaById(id);
 		Pizza pizza = optPizza.get();
 		model.addAttribute("obj", pizza);
+		
 		model.addAttribute("routeName", "show");
 		model.addAttribute("element", "pizza");
-		
 		return "CRUDtemplates/pizzas-drinks/show";
 	}
 	
@@ -77,21 +80,21 @@ public class PizzaController {
 	@GetMapping("/pizza/create")
 	public String getCreatePizza(Model model) {
 		
-		
 		List<Promotion> promotions = promotionService.findAll(); 
-		Pizza pizza = new Pizza();
-		
-		model.addAttribute("obj", pizza);
 		model.addAttribute("promo", promotions);
+
+		Pizza pizza = new Pizza();
+		model.addAttribute("obj", pizza);
 		
 		model.addAttribute("routeName", "new");
 		model.addAttribute("element", "pizza");
-		model.addAttribute("action", "/pizza/create");
+		model.addAttribute("action", "/pizza/store");
 		
 		return "CRUDtemplates/pizzas-drinks/new";
 	}
 	
-	@PostMapping("/pizza/create")
+// Store
+	@PostMapping("/pizza/store")
 	public String storePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 		if(bindingResult.hasErrors()) {
@@ -105,16 +108,16 @@ public class PizzaController {
 		return "redirect:/";
 	}
 	
+	
 // Edit
 	@GetMapping("/pizza/update/{id}")
 	public String getPizzaUpdate(@PathVariable("id") int id, Model model) {
 		
+		List<Promotion> promotions = promotionService.findAll(); 
+		model.addAttribute("promo", promotions);
 		
 		Optional<Pizza> optPizza = pizzaService.findPizzaById(id);
 		Pizza pizza = optPizza.get();
-		List<Promotion> promotions = promotionService.findAll(); 
-
-		model.addAttribute("promo", promotions);
 		model.addAttribute("obj", pizza);
 		
 		model.addAttribute("routeName", "edit");
@@ -125,13 +128,20 @@ public class PizzaController {
 	}
 
 	@PostMapping("/pizza/update")
-	public String updatePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		
+	public String updatePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {		
 
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+			return "redirect:/pizza/update/" + pizza.getId();
+		}
+		
+		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
+		
 		pizzaService.save(pizza);
 		
 		return "redirect:/";
 	}
+	
 	
 // Delete
 	@GetMapping("/pizza/delete/{id}")
@@ -142,13 +152,14 @@ public class PizzaController {
 		return "redirect:/";
 	}
 	
+	
 // Search
 	@GetMapping("/pizza/search")
 	public String getSearchPizzaByName(Model model, @RequestParam(name = "query", required = false) String query) {
 		
 		List<Pizza> pizzas = query == null ? pizzaService.findAll() : pizzaService.findByName(query);
-		
 		model.addAttribute("obj", pizzas);
+		
 		model.addAttribute("query", query);
 		model.addAttribute("routeName", "searchPizza");
 		model.addAttribute("element", "pizza");

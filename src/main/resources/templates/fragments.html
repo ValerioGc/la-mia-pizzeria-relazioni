@@ -21,7 +21,7 @@
 	<nav>
 		<ul class="aside-nav list-group list-unstyled ">
 			<li th:class="'list-group-item ' + ${routeName.equals('home') ? 'active' : ''}">	
-				<a href="/home" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('home') ? ' bdy' : ''} "><i class="mx-2 fa-solid fa-house"></i>Homepage</a>
+				<a href="/" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('home') ? ' bdy' : ''} "><i class="mx-2 fa-solid fa-house"></i>Homepage</a>
 			</li>
 			<li th:class="'list-group-item ' + ${routeName.equals('search') ? 'active' : ''}">	
 				<a href="/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('search') ? ' bdy' : ''} "><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca</a>
@@ -39,7 +39,7 @@
 				Pizza <i class="fa-solid fa-angle-down mx-2"></i>
 			</li>
 			<li th:class="'list-group-item ' + ${routeName.equals('pizza') ? 'active' : ''}">
-				<a href="/" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('pizza') ? ' bdy' : ''}"><i class="mx-2 fa-solid fa-list"></i>Vedi tutte le pizze</a>
+				<a href="/pizza/index" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('pizza') ? ' bdy' : ''}"><i class="mx-2 fa-solid fa-list"></i>Vedi tutte le pizze</a>
 			</li>
 			<li th:class="'list-group-item ' + ${routeName.equals('searchPizza') ? 'active' : ''}">	
 				<a href="/pizza/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('searchPizza') ? ' bdy' : ''} "><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca Pizza</a>
@@ -84,38 +84,62 @@
 
 	
 <!--------------------- Table Layout ----------------------->
-
-<table th:fragment="table(obj, objNm, type)"
+	
+<table th:fragment="table(obj, objN, type, typeRel)"
 	   class="py-3 table table-dark table-striped text-start">
 	<thead>
 		<tr style="position:sticky;top:0;width:100%;border-bottom:1px solid #fff;transition:all 0.5s linear;">
-			<th>Nome</th>
-			<th>Descrizione</th>
-			<th class="text-start">Prezzo</th>
-			<th colspan="3" class="text-center" th:if="${type} == 'display'">Azioni:</th>
+			<th style="width:20%" colspan="1">Nome</th>
+			<th style="width:20%" colspan="1">Descrizione</th>
+			
+			<th style="width:10%" colspan="1">Promozione</th>
+			
+			<th style="width:10%" colspan="1">Ingredienti</th>
+			
+			<th style="width:10%" colspan="1" class="text-start">Prezzo</th>
+			<th style="width:30%"  class="text-center" th:if="${type} == 'display'">Azioni:</th>
 		</tr>
 	</thead>
 	<tbody>		
-		<tr th:each="drink : ${obj}" th:object="${drink}">			 
-			<td class="text-capitalize" th:text="*{name}"></td>
-			<td class="text-capitalize" th:text="*{description}"></td>
-			<td style="width:15%" th:text="*{price} +  ' &euro;'"></td>
+		<tr th:each="el : ${obj}" th:object="${el}">			 
 			
-			<span th:if="${type} == 'display'">
-				<td style="width:10%">
- 					<a class="btn btn-primary" th:href="@{'/' + ${objNm} + '/{id}' (id=${drink.id})}">Dettagli</a> 
-				</td>
-				<td style="width:10%">
-					<a th:href="@{'/' + ${objNm} + '/update/{id}'(id=${drink.id})}" class="btn btn-success">Modifica</a>
-				</td>
-				<td  style="width:10%">
-					<a th:href="@{'/' + ${objNm} + '/delete/{id}'(id=${drink.id})}" class="btn btn-danger">Elimina</a>
-				</td>
-			</span>
+			<td style="width:20%" class="text-capitalize" th:text="*{name}"></td>
+			<td style="width:20%" class="text-capitalize" th:text="*{description}"></td>
+		
+			<!-- Promotions -->
+			<td style="width:10%"  >
+				<span th:each="promo : ${el.getPromotion()}">
+					[[${promo.name}]]
+				</span>
+				<span th:if="!${el.getPromotion()}"> Nessuna promo associata</span>
+			</td>
+			
+			<!-- Ingredients -->
+			<td style="width:10%" >
+				<p th:if="${typeRel} == 'ty2'">---</p>
+				<ul th:if="${typeRel} == 'ty1'">
+					<li th:each="ingredient : ${el.getIngredients()}">[[${ingredient.name}]]</li>
+				</ul>
+			</td>
+			
+			<!-- price -->
+			<td style="width:10%"  th:text="*{price} +  ' &euro;'"></td>
+			
+			<!-- Buttons -->
+			<td th:if="${type} == 'display'">
+					<a class="btn btn-primary mx-1" th:href="@{'/' + ${objNm} + '/{id}' (id=${el.id})}">Dettagli</a> 
+			
+
+				<a th:href="@{'/' + ${objNm} + '/update/{id}'(id=${el.id})}" class="btn btn-success mx-1">Modifica</a>
+			
+
+				<a th:href="@{'/' + ${objNm} + '/delete/{id}'(id=${el.id})}" class="btn btn-danger mx-1">Elimina</a>
+			</td>
 		
 		</tr>
 	</tbody>
 </table> 
+
 
 
 		

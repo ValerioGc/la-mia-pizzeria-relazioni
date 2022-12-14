@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -36,13 +38,27 @@ public class Drink implements PriceableInt{
 	@NotNull(message = "Il prezzo deve essere vuoto")
 	private int price;
 	
+	@ManyToOne
+	@JoinColumn(nullable = true)
+	private Promotion promotion;
+	
+	
 	public Drink() { }
 	public Drink(String name, String description, int price ) {
 		setName(name);
 		setDescription(description);
 		setPrice(price);
 	}
-
+	// con promozioni
+	public Drink(String name, String description, int price, Promotion promotion ) {
+		setName(name);
+		setDescription(description);
+		setPrice(price);
+		setPromotion(promotion);
+	}
+	
+	
+//  ID
 	public int getId() {
 		return id;
 	}
@@ -51,22 +67,31 @@ public class Drink implements PriceableInt{
 		this.id = id;
 	}
 
+//  Name
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
+//  Description
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	
+//  promo 
+	public Promotion getPromotion() {
+		return promotion;
+	}
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+	
+// price
 	@Override
 	public int getPrice() {
 		return price;

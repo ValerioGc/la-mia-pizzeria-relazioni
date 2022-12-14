@@ -51,4 +51,17 @@ public class PromotionService {
 		
 		return promotions;
 	}
+	
+// Find drinks
+	@Transactional
+	public List<Promotion> findDrinks() {
+		
+		List<Promotion> promotions  = promotionRepo.findAll();
+		
+		for (Promotion promotion : promotions ) {
+			Hibernate.initialize(promotion.getDrinks());
+		}
+		
+		return promotions;
+	}
 }

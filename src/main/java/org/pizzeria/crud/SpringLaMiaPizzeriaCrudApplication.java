@@ -119,16 +119,16 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		pizzaService.save(p13);
 
 	//drinks
-		Drink d1 = new Drink("coca cola", "lorem ipsum", 2);
-		Drink d2 = new Drink("fanta", "lorem ipsumm", 2);
-		Drink d3 = new Drink("pepsi", "lorem ipsumm", 2);
-		Drink d4 = new Drink("vino", "lorem ipsumm", 16);
-		Drink d5 = new Drink("sprite", "lorem ipsumm", 2);
-		Drink d6 = new Drink("peroni", "lorem pizzum", 2);
-		Drink d7 = new Drink("nastro azzurro", "lorem ipsum", 3);
+		Drink d1 = new Drink("coca cola", "lorem ipsum", 2, prom6);
+		Drink d2 = new Drink("fanta", "lorem ipsumm", 2, prom5);
+		Drink d3 = new Drink("pepsi", "lorem ipsumm", 2, prom3);
+		Drink d4 = new Drink("vino", "lorem ipsumm", 16, prom1);
+		Drink d5 = new Drink("sprite", "lorem ipsumm", 2, prom4);
+		Drink d6 = new Drink("peroni", "lorem pizzum", 2, prom3);
+		Drink d7 = new Drink("nastro azzurro", "lorem ipsum", 3, prom4);
 		Drink d8 = new Drink("heineken", "lorem ipsum", 3);
-		Drink d9 = new Drink("acqua", "lorem ipsum", 1);
-		Drink d10 = new Drink("chinotto", "lorem ipsum", 2);
+		Drink d9 = new Drink("acqua", "lorem ipsum", 1, prom3);
+		Drink d10 = new Drink("chinotto", "lorem ipsum", 2,prom2);
 
 		drinkService.save(d1);
 		drinkService.save(d2);

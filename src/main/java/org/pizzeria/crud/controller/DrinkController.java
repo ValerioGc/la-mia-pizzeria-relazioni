@@ -27,13 +27,17 @@ public class DrinkController {
 	@Autowired
 	private DrinkService drinkService;
 
-// index
+// Index
 	@GetMapping
 	public String index(Model model) {
 		
 		List<Drink> drinks = drinkService.findAll();
 		model.addAttribute("obj", drinks);
-		model.addAttribute("routeName", "drink");
+		
+		
+		model.addAttribute("routeName", "drink");		
+		model.addAttribute("element", "drink");
+		model.addAttribute("typeRel", "ty2");
 		
 		return "CRUDtemplates/pizzas-drinks/index";
 	}

@@ -39,6 +39,10 @@ public class Promotion {
 	
 	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<Pizza> pizzas;
+
+	@OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private List<Drink> drinks;
+	
 	
 	public Promotion() { }
 	public Promotion(String name, LocalDate startDate, LocalDate endDate ) {
@@ -89,7 +93,14 @@ public class Promotion {
 		this.pizzas = pizzas;
 	}
 	
-	
+// Drinks
+	public List<Drink> getDrinks() {
+		return drinks;
+	}
+	public void setDrinks(List<Drink> drinks) {
+		this.drinks = drinks;
+	}
+		
 	@Override
 	public String toString() {
 		return  "Titolo: " + getName() 

@@ -30,17 +30,13 @@ public class PriceableController {
 	
 		List<PriceableInt> elementsPriceables = new LinkedList<>();
 		
-		// Add elements
 		elementsPriceables.addAll(drinkService.findAll());
 		elementsPriceables.addAll(pizzaService.findAll());
 	
-		//Sort
 		elementsPriceables.sort((p1, p2) -> p1.getPrice() - p2.getPrice());
 	
-		
-		//Attributes
 		model.addAttribute("obj", elementsPriceables);
-		model.addAttribute("routeName", "search");
+		model.addAttribute("routeName", "priceable");
 	
 		return "SRCtemplates/priceable";
 	}

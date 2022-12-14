@@ -14,22 +14,27 @@ public class DrinkService {
 	@Autowired
 	private DrinkRepo drinkRepo;
 	
+// Save
 	public void save(Drink drink) {
 		drinkRepo.save(drink);
 	}
 	
+// Find 
 	public List<Drink> findAll() {
 		return drinkRepo.findAll();
 	}
-	
+
+// Find by ID
 	public Optional<Drink> findDrinkById(int id) {
 		return drinkRepo.findById(id);
 	}
 	
+// Find by ID
 	public void deleteDrinkById(int id) {
 		drinkRepo.deleteById(id);
 	}
 	
+// Find by Name	
 	public List<Drink> findByName(String name) {
 		return drinkRepo.findByNameContainingIgnoreCase(name);
 	}
