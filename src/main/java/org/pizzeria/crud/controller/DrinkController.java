@@ -82,12 +82,17 @@ public class DrinkController {
 	@PostMapping("/store")
 	public String storeDrink(@Valid Drink drink, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
+	// --------------------------------- Errors & Msg --------------------------------------	
+		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			return "redirect:/drink/create";
 		}
 		
 		redirectAttributes.addFlashAttribute("successMsg", "Creazione avvenuta con successo");
+	 
+	//	-------------------------------------------------------------------------------------	
+		
 		drinkService.save(drink);
 		
 		return "redirect:/drink/index";

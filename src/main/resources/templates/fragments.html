@@ -164,8 +164,32 @@
 			<span class="d-block py-1"><strong>Descrizione:</strong></span>
 			<span>[[*{description}]] </span>
 		</li>
+		
 	</ul>
+
+
+	<!-- Promotions -->
+	<div class="w-50">
+		<span><strong>Promozioni:</strong></span>
+		<span th:each="promo : ${obj.getPromotion()}">
+			[[${promo.name}]]
+		</span>
+		<span th:if="!${obj.getPromotion()}"> Nessuna promo associata</span>
+	</div>
 	
+	<hr/>
+	
+	<!-- Ingredients -->
+	<div class="w-50">
+		<p></strong>Ingredienti:</strong></p>
+		<p th:if="${element.equals('drink')}">---</p>
+	
+		<span th:if="${element.equals('pizza')}" th:each="ingredient : ${obj.getIngredients()}">[[${ingredient.name}]],</span>
+
+	</div>
+	
+	
+	<!-- Buttons -->
 	<span class="m-auto">
 		<a th:href="@{'/' + ${element} + '/edit/{id}' (id=*{id})}" 
 		   class=" btn-primary btn mx-2">Modifica</a>			

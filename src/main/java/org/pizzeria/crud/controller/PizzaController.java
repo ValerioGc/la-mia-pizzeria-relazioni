@@ -67,6 +67,9 @@ public class PizzaController {
 //  Show ------------------------------------------------------------------
 	@GetMapping("/pizza/{id}")
 	public String getPizza(@PathVariable("id") int id, Model model) {
+	
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredients", ingredients);
 		
 		Optional<Pizza> optPizza = pizzaService.findPizzaById(id);
 		Pizza pizza = optPizza.get();
@@ -96,20 +99,23 @@ public class PizzaController {
 		model.addAttribute("element", "pizza");
 		model.addAttribute("objN", "pizza");
 		
-		
 		return "CRUDtemplates/pizzas-drinks/new";
 	}
 	
-// Store 
+// Store  ----------------------------------------------------------------
 	@PostMapping("/pizza/store")
 	public String storePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
+	// --------------------------------- Errors & Msg --------------------------------------	
+		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			return "redirect:/pizza/create";
 		}
-		
 		redirectAttributes.addFlashAttribute("successMsg", "Creazione avvenuta con successo");
+	
+	// -------------------------------------------------------------------------------------	
+
 		pizzaService.save(pizza);
 		
 		return "redirect:/pizza/index";

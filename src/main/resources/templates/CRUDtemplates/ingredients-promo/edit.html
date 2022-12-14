@@ -22,12 +22,12 @@
 					<!-- error message -->
 					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
 				
-				
+					<!-- Edit Form -->
 					<form  method="POST" 
 						   th:action="${action}" 
 					       class="card p-5 my-5 w-50 m-auto" >
 					  
-				  		<!-- Ingredients -->
+				  		<!-- Ingredients/Promos -->
 						<div th:object="${obj}">		
 						
 							<input type="number" name="id" th:field="*{id}" class="d-none">
@@ -40,20 +40,18 @@
 							<input th:if="${routeName} == 'editPromo'" type="date" name="startDate" th:field="*{startDate}" placeholder="Inserisci la data di inizio della promo" class="w-50"/>
 							<input th:if="${routeName} == 'editPromo'" type="date" name="endDate" th:field="*{endDate}" placeholder="Inserisci la data di termine della promo" class="w-50"/>
 						
-						
 						</div>
 									
 						<!-- Pizzas -->
-						 <span th:each="pizza : ${pizzas}"
-	                    	   th:object="${pizza}" class="my-3">
-	                        
-	                        <input type="checkbox" 
-	                               name="pizzas"
-	                               th:value="*{id}" 
-	                               th:field="${obj.pizzas}">
-	                        
-	                        <label>[[*{name}]]</label>
-						                   
+						<span th:each="pizza : ${pizzas}"
+               	    	  	  th:object="${pizza}" class="my-3">
+                   
+                   			<input type="checkbox" 
+                          			name="pizzas"
+                          			th:value="*{id}" 
+                          			th:field="${obj.pizzas}">
+                   
+                   			<label>[[*{name}]]</label>
 						</span>
 
 						<button type="submit" class="btn btn-success mx-auto w-25 my-4">Modifica</button>

@@ -22,11 +22,9 @@
 					<!-- Error message -->
 					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
 
-					
-				<!-- 	<th:block th:replace="fragments :: formM('POST', ${action}, ${obj})"></th:block> -->
-								
-					<form 
-						  method="POST" th:action="'/' + ${objN} + '/store'" 
+					<!-- New Form -->	
+					<form th:action="'/' + ${objN} + '/store'"
+				 		  method="POST" 
 						  class="card p-5 my-5 w-50 m-auto" 
 						  th:object="${obj}">
 					
@@ -47,6 +45,7 @@
 						<!-- Promo -->
 						<label>Promozioni:</label>
 						<select name="promotion" class="mb-3">
+							<option value="-1">---</option>
 							<option	th:each="promotion : ${promo}" th:object="${promotion}"
 								th:value="*{id}" th:field="${obj.promotion}">
 									[[*{name}]]

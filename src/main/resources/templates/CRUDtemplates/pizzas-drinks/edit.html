@@ -22,12 +22,12 @@
 					<!-- error message -->
 					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
 				
-					<form
-					  method="POST" th:action="'/' + ${element} + '/update'" 
-					  class="card p-5 my-5 w-50 m-auto" 
-					  >
+					<!-- Edit Form -->>
+					<form th:action="'/' + ${element} + '/update'" 
+					  method="POST" 
+					  class="card p-5 my-5 w-50 m-auto">
+						
 						<div th:object="${obj}">
-				
 							<input type="text" name="id" th:field="*{id}" style="display:none">
 							
 							<!-- Name -->
@@ -48,6 +48,7 @@
 						<span class="my-3">
 							<label>Promo:</label>
 							<select name="promotion" class="mb-3">
+							<option value="-1">---</option>
 								<option
 									th:each="promotion : ${promo}"
 									th:value="*{id}"
@@ -67,6 +68,7 @@
 							
 								<input type="checkbox" name="ingredient" 
 										th:value="${ingr.id}"
+										th:field="${obj.ingredients}"
 										class="mb-3">
 		
 								<label class="fw-bold d-inline-block">[[${ingr.name}]]</label>	
