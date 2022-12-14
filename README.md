@@ -1,6 +1,6 @@
 # spring-la-mia-pizzeria-relazioni
 
-> Exercise about Exercise about DB entity relationships
+> Exercise about Exercise about DB entity relationships and CRUD operations using Thymeleaf and Spring
 
 <br/>
 
