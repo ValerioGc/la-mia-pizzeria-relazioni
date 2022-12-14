@@ -2,6 +2,7 @@ package org.pizzeria.crud.pojo;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.pizzeria.crud.intf.PriceableInt;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -49,7 +51,7 @@ public class Pizza implements PriceableInt {
 	private Promotion promotion;
 
 	@ManyToMany
-	private List<Ingredient> ingredients;
+	private Set<Ingredient> ingredients;
 	
 	
 	
@@ -65,12 +67,12 @@ public class Pizza implements PriceableInt {
 		setPromotion(promotion);
 	}
 	// con ingredienti
-	public Pizza(String name, String description, int price, List<Ingredient> ingredients) {
+	public Pizza(String name, String description, int price, Set<Ingredient> ingredients) {
 		this(name, description, price);
 		setIngredients(ingredients);
 	}
 	// con ingredienti e promozioni
-	public Pizza(String name, String description, int price, Promotion promotion, List<Ingredient> ingredients) {
+	public Pizza(String name, String description, int price, Promotion promotion, Set<Ingredient> ingredients) {
 		this(name, description, price, promotion);
 		setIngredients(ingredients);
 	}
@@ -109,11 +111,26 @@ public class Pizza implements PriceableInt {
 	}
 	
 // Ingredients
-	public List<Ingredient> getIngredients() {
+	public Set<Ingredient> getIngredients() {
 		return ingredients;
 	}
-	public void setIngredients(List<Ingredient> ingredients) {
+	public void setIngredients(Set<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+	
+// Add ingredients
+	public void addIngredient(Ingredient ingredient) {
+		
+		boolean finded = false;
+		for (Ingredient ingr : getIngredients()) {
+			
+			if (ingr.getId() == ingredient.getId())
+				finded = true;
+		}
+		
+		if (!finded) {
+			getIngredients().add(ingredient);
+		}
 	}
 	
 // price

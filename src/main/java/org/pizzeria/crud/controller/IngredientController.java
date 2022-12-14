@@ -1,6 +1,7 @@
 package org.pizzeria.crud.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.pizzeria.crud.pojo.Ingredient;
 import org.pizzeria.crud.pojo.Pizza;
@@ -35,23 +36,31 @@ public class IngredientController {
 	public String index(Model model) {
 		
 		List<Ingredient> ingredients = ingredientService.findAllPizzas();
-		model.addAttribute("ingredients", ingredients);
-
+		model.addAttribute("obj", ingredients);
+		
+	// ------------- Create-------------------------
+		
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("pizzas", pizzas);
 		
 		Ingredient ingr = new Ingredient();
-		model.addAttribute("ingr", ingr);
+		model.addAttribute("objS", ingr);
 		
-		model.addAttribute("routeName", "ingredients");
+	//----------------------------------------------
+		
+		model.addAttribute("routeName", "Ingrediente");
 		model.addAttribute("type", "display");
-			
-		return "CRUDtemplates/ingredients/index";
+		model.addAttribute("objN", "ingredients");
+		
+		
+		return "CRUDtemplates/ingredients-promo/index";
 	}
 	
 // Store
 	@PostMapping("/store")
 	public String storeIngredient(@Valid Ingredient ingredient,  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		
+		//---------------------------- Errors & Msg ----------------------------------------------
 		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -60,9 +69,10 @@ public class IngredientController {
 		
 		redirectAttributes.addFlashAttribute("successMsg", "Creazione avvenuta con successo");
 		
-		List<Pizza> ingredientP = ingredient.getPizzas();
+		// ---------------------------------------------------------------------------------------
+		
 
-		for (Pizza pizza : ingredientP) {
+		for (Pizza pizza :  ingredient.getPizzas()) {
 			pizza.getIngredients().add(ingredient);
 		}	
 	
@@ -73,24 +83,31 @@ public class IngredientController {
 	
 
 // Edit
-	@GetMapping("/edit/{id}")
+	@GetMapping("/update/{id}")
 	public String editIngredient(@PathVariable("id") int id, Model model) {
 		
 		Ingredient ingr = ingredientService.findIngredientById(id).get();
-		model.addAttribute("ingr", ingr);
+		model.addAttribute("obj", ingr);
 		
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("pizzas", pizzas);
 		
-		model.addAttribute("routeName", "edit");
+		model.addAttribute("routeName", "editIngredient");
 		model.addAttribute("element", "ingrediente");
 		
-		return "CRUDtemplates/ingredients/edit";
+		model.addAttribute("action", "/ingredients/update/{id}");
+		
+		return "CRUDtemplates/ingredients-promo/edit";
 	}
 	
 // Update
-	@PostMapping("/update")
-	public String updateIngredient(@Valid Ingredient ingredient, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	@PostMapping("/update/{id}")
+	public String updateIngredient(@Valid Ingredient ingredient, 
+									@PathVariable("id") int id,
+									BindingResult bindingResult, 
+									RedirectAttributes redirectAttributes) {
+		 
+		//------------------------ Errors & meassages --------------------------------------
 		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -99,15 +116,21 @@ public class IngredientController {
 		
 		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
 		
-		List<Pizza> ingredientP = ingredient.getPizzas();
+		//----------------------------------------------------------------------------------
+
+		Ingredient ingrOl = ingredientService.findIngredientById(id).get();
 		
-		for (Pizza pizza : ingredientP) {
-			pizza.getIngredients().add(ingredient);
+		for (Pizza pizza : ingrOl.getPizzas()) {
+			pizza.getIngredients().remove(ingrOl);
+		}
+		
+		for (Pizza pizza : ingredient.getPizzas()) {
+			pizza.addIngredient(ingredient);
 		}
 		
 		ingredientService.save(ingredient);
 		
-		return "redirect:/ingredients";
+		return "redirect:/ingredients/edit/" + id;
 	}
 	
 	

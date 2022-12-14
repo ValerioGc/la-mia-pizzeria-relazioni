@@ -16,43 +16,51 @@
 				<th:block th:replace="fragments :: asideNav(${routeName})"></th:block>
 				
 				<main class="col-9">
-					<div th:if="${!ingredients.isEmpty()}" >
+					<div th:if="${!obj.isEmpty()}" >
 				
 						<!--  main title -->
 						<th:block th:replace="fragments :: mainTitle(${routeName})"></th:block>  
 				
-					
-						<!-- Error message -->
-						<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
-										
-						<!-- Create new ingredient -->
-						<form action="/ingredients/store" method="POST"
-							  class="text-center py-3 d-flex vertical-align-middle justify-content-stretch">
+						<!-- Create new promo -->
+						<form
+							th:action="'/' + ${objN} + '/store'"
+							method="POST"
+							class="text-center py-3 d-flex vertical-align-middle justify-content-stretch">
 							
-							<div class="mx-5 w-50 text-center" th:object="${ingr}">
-								<label for="promo-name" class="fw-bold d-block">Crea un nuovo ingrediente: </label>
+							
+							<div class="mx-5 w-50 text-center" th:object="${objS}">
+								<label for="promo-name" class="fw-bold d-block" th:text="${routeName} == 'Ingrediente'?'Crea un nuovo ingrediente':'Crea una nuova promo'"></label>
 								<span class="d-flex align-items-center justify-content-center my-5">
-									<input type="text" name="name" id="promo-name" th:field="*{name}" placeholder="Inserisci il nome dell'ingrediente" class="w-50"/>
+									<input type="text" name="name" id="promo-name" placeholder="Inserisci il nome della promo" class="w-50"/>
 									<input type="submit" value="Crea" class="btn btn-primary mx-3"/>
+									
+									<input th:if="${routeName} == 'promozioni'" type="date" name="startDate" th:field="*{startDate}" placeholder="Inserisci la data di inizio della promo" class="w-50"/>
+									<input th:if="${routeName} == 'promozioni'" type="date" name="endDate" th:field="*{endDate}" placeholder="Inserisci la data di termine della promo" class="w-50"/>
+								
 								</span>
 							</div>
 							
 							<div class="mx-5" style="width:30%;">
 							
-								<label class="d-block my-3">Seleziona le pizze a cui associare l'ingrediente:</label>				
-
-								<div th:each="pizza : ${pizzas}"  th:object="${pizza}" class="d-inline-block text-center mx-2 my-2">
+								<label class="d-block my-3">Seleziona le pizze a da associare:</label>				
 								
-		                        	<input type="checkbox" name="pizzas" 
-			                        	   th:field="${ingr.pizzas}"
-			                           	   th:value="*{id}">
-			                           
-									<label class="fw-bold d-inline-block">[[*{name}]]</label>
+								<div th:each="pizza : ${pizzas}"  class="d-inline-block text-center mx-2 my-2">
+			
+										
+									<input type="checkbox"  
+										value="${objS.pizza.id}" 
+										name="pizza_id" />
+										
+									<label class="fw-bold d-inline-block">[[${pizza.name}]]</label>
 	
+									
 								</div>
 							</div>
 						</form>		
-						
+							
+						<!-- error message -->
+						<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
+				
 						<!-- Validation msg -->
 						<th:block th:replace="fragments :: successMsg(${successMsg})"></th:block>
 		
@@ -66,26 +74,29 @@
 								</tr>
 							</thead>
 							<tbody>		
-								<tr th:each="ingredient : ${ingredients}" th:object="${ingredient}">	
+								<tr th:each="el : ${obj}" th:object="${el}">	
 									<td class="text-capitalize" th:text="*{name}"></td>
+									
+									<!-- Pizze -->
 									<td class="text-capitalize" >
 										<ul class="list-unstyled">
-											<li th:each="pizza : ${ingredient.getPizzas()}" th:text="${pizza.name} + ','"/> <li>
+											<li th:each="pizza : ${el.getPizzas()}" th:text="${pizza.name} + ','"/> <li>
 										</ul>
 									</td>
+									
 									<!-- Buttons -->	
 									<td style="width:10%">
-										<a th:href="@{/ingredients/edit/{id}(id=${ingredient.id})}" class="btn btn-success">Modifica</a>
+										<a th:href="@{'/' + ${objN} + '/update/{id}' (id=${el.id})}" class="btn btn-success">Modifica</a>
 									</td>
 									<td  style="width:10%">
-										<a th:href="@{/ingredients/delete/{id}(id=${ingredient.id})}" class="btn btn-danger">Elimina</a>
+										<a th:href="@{'/' + ${objN} + '/delete/{id}' (id=${el.id})}" class="btn btn-danger">Elimina</a>
 									</td>
 								</tr>
 							</tbody>
 						</table> 
 					</div>
 				
-					<h2 th:if="${ingredients.isEmpty()}">Nessuna promozione presente</h2>
+					<h2 th:if="${obj.isEmpty()}">Nessuna promozione presente</h2>
 				
 				</main>	
 			</div>					

@@ -5,7 +5,10 @@ import java.util.Optional;
 
 import org.pizzeria.crud.pojo.Drink;
 import org.pizzeria.crud.pojo.Pizza;
+import org.pizzeria.crud.pojo.Promotion;
 import org.pizzeria.crud.serv.DrinkService;
+import org.pizzeria.crud.serv.IngredientService;
+import org.pizzeria.crud.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +29,12 @@ public class DrinkController {
 
 	@Autowired
 	private DrinkService drinkService;
-
+	
+	@Autowired
+	private PromotionService promotionService;
+	
 // Index
-	@GetMapping
+	@GetMapping("/index")
 	public String index(Model model) {
 		
 		List<Drink> drinks = drinkService.findAll();
@@ -36,7 +42,8 @@ public class DrinkController {
 		
 		
 		model.addAttribute("routeName", "drink");		
-		model.addAttribute("element", "drink");
+		model.addAttribute("type", "display");
+		model.addAttribute("objN", "drink");
 		model.addAttribute("typeRel", "ty2");
 		
 		return "CRUDtemplates/pizzas-drinks/index";
@@ -60,16 +67,20 @@ public class DrinkController {
 	@GetMapping("/create")
 	public String createDrink(Model model) {
 		
+		List<Promotion> promotions = promotionService.findAll(); 
+		model.addAttribute("promo", promotions);
+		
 		Drink drink = new Drink();
 		model.addAttribute("obj", drink);
+		
 		model.addAttribute("routeName", "newDrink");
 		model.addAttribute("element", "drink");
-		model.addAttribute("action", "/drink/create");
+		model.addAttribute("objN", "drink");
 		
 		return "CRUDtemplates/pizzas-drinks/new";
 	}
 	
-	@PostMapping("/create")
+	@PostMapping("/store")
 	public String storeDrink(@Valid Drink drink, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if(bindingResult.hasErrors()) {
@@ -80,11 +91,11 @@ public class DrinkController {
 		redirectAttributes.addFlashAttribute("successMsg", "Creazione avvenuta con successo");
 		drinkService.save(drink);
 		
-		return "redirect:/drink";
+		return "redirect:/drink/index";
 	}
 	
 // Edit
-	@GetMapping("/update/{id}")
+	@GetMapping("/edit/{id}")
 	public String editDrink(@PathVariable("id") int id, Model model) {
 		
 		Optional<Drink> optDrink = drinkService.findDrinkById(id);

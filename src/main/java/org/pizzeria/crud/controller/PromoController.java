@@ -29,28 +29,40 @@ public class PromoController {
 	@Autowired
 	private PizzaService pizzaService;
 	
-//  Index
+//  Index + edit
 	@RequestMapping("/index")
 	public String indexPromos(Model model) {
 		
-		List<Promotion> promos = promotionService.findAll();
 
+		
+		List<Promotion> promos = promotionService.findAll();
+		model.addAttribute("obj", promos);
+
+// --------------- Create ----------------------------
+		
+		
 		List<Pizza> pizzas = pizzaService.findAll();
-		
-		model.addAttribute("promos", promos);
 		model.addAttribute("pizzas", pizzas);
-		model.addAttribute("routeName", "promozioni");
-		
+
 		Promotion prom = new Promotion();
-		model.addAttribute("promo", prom);
+		model.addAttribute("objS", prom);
+// -------------------------------------------
 		
-		return "CRUDtemplates/promo/index";
+		model.addAttribute("objN", "promos");
+		model.addAttribute("routeName", "promozioni");
+
+		return "CRUDtemplates/ingredients-promo/index";
 	}
 
 // create
 	@GetMapping("/create")
-	public String getPromotionCreate(Model model) {
+	public String getPromotionCreate(Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+			return "redirect:/promos/index";
+		}
 		
+		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
 		Promotion promotion = new Promotion();
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("promotion", promotion);
@@ -69,7 +81,7 @@ public class PromoController {
 		
 		promotionService.save(promotion);
 		
-		return "redirect:/promotion/index";
+		return "redirect:/promos/index";
 	}
 
 
@@ -79,20 +91,24 @@ public class PromoController {
 		
 		Optional<Promotion> optPromo = promotionService.findPromotionById(id);
 		Promotion promotion = optPromo.get();
+		model.addAttribute("obj", promotion);
 		
 	
 		List<Pizza> pizzas = pizzaService.findAll();
-		
-		model.addAttribute("promo", promotion);
 		model.addAttribute("pizzas", pizzas);
-		model.addAttribute("routeName", "edit");
+		
+		model.addAttribute("routeName", "editPromo");
+		model.addAttribute("element", "promozione");
 		model.addAttribute("action", "/promos/update");
 		
-		return "CRUDtemplates/promo/edit";
+		return "CRUDtemplates/ingredients-promo/edit";
 	}
 
+//  Update
 	@PostMapping("/update")
-	public String updatePromo(@Valid Promotion promotion, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String updatePromo(@Valid Promotion promotion, 
+								BindingResult bindingResult, 
+								RedirectAttributes redirectAttributes) {
 		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

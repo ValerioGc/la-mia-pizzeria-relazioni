@@ -55,7 +55,7 @@ public class PizzaController {
 		
 		model.addAttribute("routeName", "pizza");
 		model.addAttribute("type", "display");
-		model.addAttribute("objNm", "pizza");
+		model.addAttribute("objN", "pizza");
 		model.addAttribute("typeRel", "ty1");
 		
 		
@@ -82,13 +82,17 @@ public class PizzaController {
 		
 		List<Promotion> promotions = promotionService.findAll(); 
 		model.addAttribute("promo", promotions);
+		
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredients", ingredients);
 
 		Pizza pizza = new Pizza();
 		model.addAttribute("obj", pizza);
 		
-		model.addAttribute("routeName", "new");
+		model.addAttribute("routeName", "newPizza");
 		model.addAttribute("element", "pizza");
-		model.addAttribute("action", "/pizza/store");
+		model.addAttribute("objN", "pizza");
+		
 		
 		return "CRUDtemplates/pizzas-drinks/new";
 	}
@@ -105,12 +109,12 @@ public class PizzaController {
 		redirectAttributes.addFlashAttribute("successMsg", "Creazione avvenuta con successo");
 		pizzaService.save(pizza);
 		
-		return "redirect:/";
+		return "redirect:/pizza/index";
 	}
 	
 	
 // Edit
-	@GetMapping("/pizza/update/{id}")
+	@GetMapping("/pizza/edit/{id}")
 	public String getPizzaUpdate(@PathVariable("id") int id, Model model) {
 		
 		List<Promotion> promotions = promotionService.findAll(); 

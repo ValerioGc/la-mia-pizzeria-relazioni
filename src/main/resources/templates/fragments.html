@@ -32,8 +32,8 @@
 			<li th:class="'list-group-item ' + ${routeName.equals('promozioni') ? 'active' : ''}">	
 				<a href="/promos/index" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('promozioni') ? ' bdy' : ''} "><i class="fa-solid mx-2 fa-money-bill-trend-up"></i>Promozioni</a>
 			</li>
-			<li th:class="'list-group-item ' + ${routeName.equals('ingredients') ? 'active' : ''}">	
-				<a href="/ingredients" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('ingredients') ? ' bdy' : ''} "><i class="fa-solid mx-2 fa-utensils"></i>Ingredienti</a>
+			<li th:class="'list-group-item ' + ${routeName.equals('Ingrediente') ? 'active' : ''}">	
+				<a href="/ingredients" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('Ingrediente') ? ' bdy' : ''} "><i class="fa-solid mx-2 fa-utensils"></i>Ingredienti</a>
 			</li>
 			<li class="dropdown-menu list-group-item text-center text-light bg-dark fw-bold py-1">
 				Pizza <i class="fa-solid fa-angle-down mx-2"></i>
@@ -44,14 +44,14 @@
 			<li th:class="'list-group-item ' + ${routeName.equals('searchPizza') ? 'active' : ''}">	
 				<a href="/pizza/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('searchPizza') ? ' bdy' : ''} "><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca Pizza</a>
 			</li>
-			<li th:class="'list-group-item ' + ${routeName.equals('new') ? 'active' : ''}">
-				<a href="/pizza/create" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('new') ? ' bdy' : ''} "><i class="fa-solid fa-pizza-slice mx-2"></i>Crea una nuova pizza</a>
+			<li th:class="'list-group-item ' + ${routeName.equals('newPizza') ? 'active' : ''}">
+				<a href="/pizza/create" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('newPizza') ? ' bdy' : ''} "><i class="fa-solid fa-pizza-slice mx-2"></i>Crea una nuova pizza</a>
 			</li>
 			<li class="list-group-item text-center text-light bg-dark fw-bold py-1">
 				Drinks <i class="fa-solid fa-angle-down mx-2"></i>
 			</li>
 			<li th:class="'list-group-item ' + ${routeName.equals('drink') ? 'active' : ''}">
-				<a href="/drink" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('drink') ? ' bdy': ''}"><i class="mx-2 fa-solid fa-list"></i>Vedi tutti i drinks</a>
+				<a href="/drink/index" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('drink') ? ' bdy': ''}"><i class="mx-2 fa-solid fa-list"></i>Vedi tutti i drinks</a>
 			</li>
 			<li th:class="'list-group-item ' + ${routeName.equals('searchDrink') ? 'active ' : ''}">	
 				<a href="/drink/search" th:class="'d-inline-block w-100 text-decoration-none' + ${routeName.equals('searchDrink') ? ' bdy' : ''}"><i class="mx-2 fa-magnifying-glass fa-solid"></i>Cerca Drink</a>
@@ -127,13 +127,12 @@
 			
 			<!-- Buttons -->
 			<td th:if="${type} == 'display'">
-					<a class="btn btn-primary mx-1" th:href="@{'/' + ${objNm} + '/{id}' (id=${el.id})}">Dettagli</a> 
-			
+					
+				<a class="btn btn-primary mx-1" th:href="@{'/' + ${objN} + '/{id}' (id=*{id})}">Dettagli</a> 
 
-				<a th:href="@{'/' + ${objNm} + '/update/{id}'(id=${el.id})}" class="btn btn-success mx-1">Modifica</a>
-			
-
-				<a th:href="@{'/' + ${objNm} + '/delete/{id}'(id=${el.id})}" class="btn btn-danger mx-1">Elimina</a>
+				<a th:href="@{'/' + ${objN} + '/edit/{id}'(id=*{id})}" class="btn btn-success mx-1">Modifica</a>
+		
+				<a th:href="@{'/' + ${objN} + '/delete/{id}'(id=*{id})}" class="btn btn-danger mx-1">Elimina</a>
 			</td>
 		
 		</tr>
@@ -180,8 +179,8 @@
 		
 <!-------------------- Main Form ------------------------>
 
-<form th:fragment="formM(method, action, obj)"
-	  method="POST" th:action="${action}" 
+<form th:fragment="formM(method, action, obj, objN)"
+	  method="POST" th:action="'/' + ${objN}+ '/store'" 
 	  class="card p-5 my-5 w-50 m-auto" 
 	  th:object="${obj}">
 

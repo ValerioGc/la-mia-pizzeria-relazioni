@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -39,6 +40,9 @@ public class Ingredient {
 	
 	@ManyToMany(mappedBy = "ingredients", cascade = CascadeType.REMOVE)
 	private List<Pizza> pizzas;
+//	@JoinTable(name="pizza_ingredients", 
+//		       joinColumns =  @JoinColumn(name="ingredient_id"),
+//			   inverseJoinColumns = @JoinColumn(name="pizza_id"))
 	
 	public Ingredient() { }
 	public Ingredient(String name) {
@@ -76,4 +80,22 @@ public class Ingredient {
 	public String toString() {
 		return "\nNome: " + getName();
 	}
+	
+	// Controllo id e unicità
+	@Override
+	public int hashCode() {
+		return getId();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (!(obj instanceof Ingredient)) {
+			return false;
+		}
+		
+		return obj.hashCode() == hashCode();
+		
+	}
+	
+	
 }

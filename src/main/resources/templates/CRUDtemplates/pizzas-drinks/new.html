@@ -26,7 +26,7 @@
 				<!-- 	<th:block th:replace="fragments :: formM('POST', ${action}, ${obj})"></th:block> -->
 								
 					<form 
-						  method="POST" th:action="${action}" 
+						  method="POST" th:action="'/' + ${objN} + '/store'" 
 						  class="card p-5 my-5 w-50 m-auto" 
 						  th:object="${obj}">
 					
@@ -53,6 +53,23 @@
 							[[*{name}]]
 						</option>
 					</select>
+					
+					<span th:if="${ingredients}" >
+						<label>Ingredienti:</label>
+						
+						<span th:each="ingr : ${ingredients}">
+						
+							<input type="checkbox" name="ingredient" 
+									th:value="${ingr.id}"
+									class="mb-3">
+	
+							<label class="fw-bold d-inline-block">[[${ingr.name}]]</label>	
+						</span>
+							
+
+					</span>
+					
+					
 		<button type="submit" class="btn btn-success mx-auto w-25 my-4">Conferma</button>
 </form>
 				</main>	

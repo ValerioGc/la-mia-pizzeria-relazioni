@@ -24,17 +24,22 @@
 				
 				
 					<form  method="POST" 
-						   action="/ingredients/update" 
+						   th:action="${action}" 
 					       class="card p-5 my-5 w-50 m-auto" >
 					  
 				  		<!-- Ingredients -->
-						<div th:object="${ingr}">		
+						<div th:object="${obj}">		
 						
 							<input type="number" name="id" th:field="*{id}" class="d-none">
 
 							<!-- name -->
 							<label for="name" class="my-2">Nome:</label>
 							<input type="text" id="name" name="name" th:field="*{name}" class="mb-3">
+						
+							<!-- Date -->
+							<input th:if="${routeName} == 'editPromo'" type="date" name="startDate" th:field="*{startDate}" placeholder="Inserisci la data di inizio della promo" class="w-50"/>
+							<input th:if="${routeName} == 'editPromo'" type="date" name="endDate" th:field="*{endDate}" placeholder="Inserisci la data di termine della promo" class="w-50"/>
+						
 						
 						</div>
 									
@@ -45,7 +50,7 @@
 	                        <input type="checkbox" 
 	                               name="pizzas"
 	                               th:value="*{id}" 
-	                               th:field="${ingr.pizzas}">
+	                               th:field="${obj.pizzas}">
 	                        
 	                        <label>[[*{name}]]</label>
 						                   
