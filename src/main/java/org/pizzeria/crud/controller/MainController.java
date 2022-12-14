@@ -46,7 +46,7 @@ public class MainController {
 		
 		model.addAttribute("query", query);
 		model.addAttribute("routeName", "search");
-		model.addAttribute("typeRel", "ty1");
+		model.addAttribute("typeRel", "ty2");
 		
 		return "SRCtemplates/commonSearch";
  	}
