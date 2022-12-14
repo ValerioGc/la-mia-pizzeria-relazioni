@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/search")
-public class SearchController {
+@RequestMapping("/")
+public class MainController {
 
 	@Autowired
 	private PizzaService pizzaService;
@@ -25,10 +25,15 @@ public class SearchController {
 	@Autowired
 	private DrinkService drinkService;
 
-	@Autowired
-	private PromotionService promotionService;
-	
+//  Home ------------------------------------------------------------------
 	@GetMapping
+	public String goHome(Model model) {
+		model.addAttribute("routeName", "home");
+		return "home" ;
+	}
+	
+//  Search ------------------------------------------------------------------
+	@GetMapping("/search")
 	public String searchByName(Model model,
 			@RequestParam(name = "query", required = false) 
 			String query) {

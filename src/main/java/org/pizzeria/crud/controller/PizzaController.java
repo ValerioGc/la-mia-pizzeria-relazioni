@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/pizza")
 public class PizzaController {
 	
 	@Autowired
@@ -37,16 +37,11 @@ public class PizzaController {
 	@Autowired
 	private IngredientService ingredientService;
 
-//  Home ------------------------------------------------------------------
-	@GetMapping
-	public String goHome(Model model) {
-		model.addAttribute("routeName", "home");
-		return "home" ;
-	}
+
 
 	
 //  Index -----------------------------------------------------------------
-	@GetMapping("/pizza/index")
+	@GetMapping("/index")
 	public String index(Model model) {
 		
 		List<Pizza> pizzas = pizzaService.findAll();
@@ -65,7 +60,7 @@ public class PizzaController {
 	
 	
 //  Show ------------------------------------------------------------------
-	@GetMapping("/pizza/{id}")
+	@GetMapping("/{id}")
 	public String getPizza(@PathVariable("id") int id, Model model) {
 	
 		List<Ingredient> ingredients = ingredientService.findAll();
@@ -83,7 +78,7 @@ public class PizzaController {
 	
 	
 //  Create ----------------------------------------------------------------
-	@GetMapping("/pizza/create")
+	@GetMapping("/create")
 	public String getCreatePizza(Model model) {
 		
 		List<Promotion> promotions = promotionService.findAll(); 
@@ -103,7 +98,7 @@ public class PizzaController {
 	}
 	
 // Store  ----------------------------------------------------------------
-	@PostMapping("/pizza/store")
+	@PostMapping("/store")
 	public String storePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 	// --------------------------------- Errors & Msg --------------------------------------	
@@ -123,7 +118,7 @@ public class PizzaController {
 	
 	
 // Edit ----------------------------------------------------------------
-	@GetMapping("/pizza/edit/{id}")
+	@GetMapping("/edit/{id}")
 	public String editPizza(@PathVariable("id") int id, Model model) {
 		
 		List<Promotion> promotions = promotionService.findAll(); 
@@ -143,7 +138,7 @@ public class PizzaController {
 	}
 	
 //  Update ----------------------------------------------------------------
-	@PostMapping("/pizza/update")
+	@PostMapping("/update")
 	public String updatePizza(@Valid Pizza pizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {		
 
 	// --------------------------------- Errors & Msg --------------------------------------	
@@ -164,7 +159,7 @@ public class PizzaController {
 	
 	
 // Delete ----------------------------------------------------------------
-	@GetMapping("/pizza/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
 		
 		pizzaService.deletePizzaById(id);
@@ -174,7 +169,7 @@ public class PizzaController {
 	
 	
 // Search ----------------------------------------------------------------
-	@GetMapping("/pizza/search")
+	@GetMapping("/search")
 	public String getSearchPizzaByName(Model model, 
 										@RequestParam(name = "query", required = false) 
 										String query) {
