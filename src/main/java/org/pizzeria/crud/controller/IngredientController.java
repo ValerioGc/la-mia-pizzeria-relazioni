@@ -89,7 +89,14 @@ public class IngredientController {
 	
 // Update
 	@PostMapping("/update")
-	public String updateIngredient(@Valid Ingredient ingredient) {
+	public String updateIngredient(@Valid Ingredient ingredient, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+			return "redirect:/ingredients/edit/" + ingredient.getId();
+		}
+		
+		redirectAttributes.addFlashAttribute("successMsg", "Modifica avvenuta con successo");
 		
 		List<Pizza> ingredientP = ingredient.getPizzas();
 		
