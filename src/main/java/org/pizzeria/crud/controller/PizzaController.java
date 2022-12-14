@@ -163,6 +163,8 @@ public class PizzaController {
 		model.addAttribute("query", query);
 		model.addAttribute("routeName", "searchPizza");
 		model.addAttribute("element", "pizza");
+		model.addAttribute("typeRel", "ty1");
+		
 		
 		return "SRCtemplates/search";
 	}

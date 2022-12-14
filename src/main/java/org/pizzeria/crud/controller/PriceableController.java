@@ -37,7 +37,8 @@ public class PriceableController {
 	
 		model.addAttribute("obj", elementsPriceables);
 		model.addAttribute("routeName", "priceable");
-	
+		model.addAttribute("typeRel", "ty2");
+		
 		return "SRCtemplates/priceable";
 	}
 }

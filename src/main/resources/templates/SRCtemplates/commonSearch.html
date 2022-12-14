@@ -31,7 +31,7 @@
 							<h4 class="py-3 text-center">Pizze:</h4>
 						
 							<!--  Index Table PIZZE -->	
-							<th:block th:insert="fragments :: table(${pizzas}, ${routeName}, 'src')"></th:block>
+							<th:block th:insert="fragments :: table(${pizzas}, ${routeName}, 'src', ${typeRel})"></th:block>
 							
 							<h3 th:if="${pizzas.isEmpty()}" class="text-center text-danger">Nessun risultato</h3>
 						</div>
@@ -41,7 +41,7 @@
 							<h4 class="py-3 text-center">Drinks:</h4>
 		
 							<!--  Index Table DRINKS -->
-							<th:block th:replace="fragments :: table(${drinks}, ${routeName}, 'src')"></th:block>
+							<th:block th:replace="fragments :: table(${drinks}, ${routeName}, 'src', ${typeRel})"></th:block>
 							
 							<h3 th:if="${drinks.isEmpty()}" class="text-center text-danger">Nessun risultato</h3>
 						</div>

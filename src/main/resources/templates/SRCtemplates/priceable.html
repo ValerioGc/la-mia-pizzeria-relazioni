@@ -25,7 +25,7 @@
 						<h3 th:if="${obj.isEmpty()}" class="pt-2 pb-3 text-center text-danger">Nessun risultato</h3>
 
 						<!--  Index Table  -->	
-						<th:block th:insert="fragments :: table(${obj}, ${routeName}, 'src')"></th:block>
+						<th:block th:insert="fragments :: table(${obj}, ${routeName}, 'src', ${typeRel})"></th:block>
 								  
 					</div>			
 				</main>

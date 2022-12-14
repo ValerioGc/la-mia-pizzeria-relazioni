@@ -22,28 +22,36 @@
 					<!-- error message -->
 					<th:block th:replace="fragments :: errorMsg(${errors})"></th:block>
 				
-					<form  method="POST" action="/ingredients/update" 
-					  class="card p-5 my-5 w-50 m-auto" >
+				
+					<form  method="POST" 
+						   action="/ingredients/update" 
+					       class="card p-5 my-5 w-50 m-auto" >
 					  
+				  		<!-- Ingredients -->
 						<div th:object="${ingr}">		
+						
 							<input type="number" name="id" th:field="*{id}" class="d-none">
+
+							<!-- name -->
 							<label for="name" class="my-2">Nome:</label>
 							<input type="text" id="name" name="name" th:field="*{name}" class="mb-3">
+						
 						</div>
 									
-							
+						<!-- Pizzas -->
 						 <span th:each="pizza : ${pizzas}"
 	                    	   th:object="${pizza}" class="my-3">
 	                        
 	                        <input type="checkbox" 
-	                            name="pizzas"
-	                            th:value="*{id}" 
-	                            th:field="${ingr.pizzas}">
+	                               name="pizzas"
+	                               th:value="*{id}" 
+	                               th:field="${ingr.pizzas}">
+	                        
 	                        <label>[[*{name}]]</label>
 						                   
 						</span>
 
-						<button type="submit" class="btn btn-success mx-auto w-25 my-4">Conferma</button>
+						<button type="submit" class="btn btn-success mx-auto w-25 my-4">Modifica</button>
 
 					</form>
 				</main>

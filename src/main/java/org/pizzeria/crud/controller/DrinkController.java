@@ -130,7 +130,7 @@ public class DrinkController {
 		model.addAttribute("query", query);
 		model.addAttribute("routeName", "searchDrink");
 		model.addAttribute("element", "drink");
-
+		model.addAttribute("typeRel", "ty2");
 		return "SRCtemplates/search";
 	}
 }

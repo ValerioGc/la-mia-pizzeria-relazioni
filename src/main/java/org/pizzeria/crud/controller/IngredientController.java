@@ -30,7 +30,7 @@ public class IngredientController {
 	private PizzaService pizzaService;
 
 
-// Index
+// Index + edit
 	@GetMapping
 	public String index(Model model) {
 		
@@ -84,6 +84,7 @@ public class IngredientController {
 		
 		model.addAttribute("routeName", "edit");
 		model.addAttribute("element", "ingrediente");
+		
 		return "CRUDtemplates/ingredients/edit";
 	}
 	

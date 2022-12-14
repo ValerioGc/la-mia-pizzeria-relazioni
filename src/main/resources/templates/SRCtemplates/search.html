@@ -33,7 +33,7 @@
 
 						<!--  Index Table  -->	
 						<th:block th:if="${!#strings.isEmpty(query)} AND ${!obj.isEmpty()}"  
-								  th:insert="fragments :: table(${obj}, ${routeName}, 'src')"></th:block>
+								  th:insert="fragments :: table(${obj}, ${routeName}, 'src', ${typeRel})"></th:block>
 								  
 					</div>			
 				</main>
