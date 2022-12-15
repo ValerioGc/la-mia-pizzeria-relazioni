@@ -25,8 +25,8 @@ public class PromotionService {
 	}
 	
 // Find by ID
-	public Optional<Promotion> findPromotionById(int id) {
-		return promotionRepo.findById(id);
+	public Promotion findPromotionById(int id) {
+		return promotionRepo.findById(id).get();
 	}
 	
 // Delete

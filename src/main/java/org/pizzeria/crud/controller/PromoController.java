@@ -97,9 +97,8 @@ public class PromoController {
 	@GetMapping("/edit/{id}")
 	public String editPromo(@PathVariable("id") int id, Model model) {
 		
-		Optional<Promotion> optPromo = promotionService.findPromotionById(id);
-		Promotion promotion = optPromo.get();
-		model.addAttribute("obj", promotion);
+		Promotion optPromo = promotionService.findPromotionById(id);
+		model.addAttribute("obj", optPromo);
 		
 		List<Pizza> pizzas = pizzaService.findAll();
 		model.addAttribute("pizzas", pizzas);
@@ -129,11 +128,6 @@ public class PromoController {
 		
 		// ---------------------------------------------------------------------------------------
 		
-		Promotion promOl = promotionService.findPromotionById(id).get();
-		
-		for (Pizza pizza : promOl.getPizzas()) {
-			pizza.getIngredients().remove(promOl);
-		}
 		
 		for (Pizza pizza : promotion.getPizzas()) {
 			pizza.setPromotion(promotion);

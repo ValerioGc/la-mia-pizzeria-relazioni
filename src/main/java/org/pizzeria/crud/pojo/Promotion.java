@@ -102,19 +102,19 @@ public class Promotion {
 		this.drinks = drinks;
 	}
 		
-	// Controllo id e unicità
-		@Override
-		public int hashCode() {
-			return getId();
+// Controllo id e unicità
+	@Override
+	public int hashCode() {
+		return getId();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (!(obj instanceof Promotion)) {
+			return false;
 		}
-		@Override
-		public boolean equals(Object obj) {
-			
-			if (!(obj instanceof Promotion)) {
-				return false;
-			}
-			return obj.hashCode() == hashCode();	
-		}
+		return obj.hashCode() == hashCode();	
+	}
 		
 	@Override
 	public String toString() {

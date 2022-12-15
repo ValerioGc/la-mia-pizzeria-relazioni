@@ -37,9 +37,11 @@ public class IngredientService {
 	public void deleteIngredientById(int id) {
 		ingredientRepo.deleteById(id);
 	}
+	
 // Find pizzas
 	@Transactional
 	public List<Ingredient> findAllPizzas() {
+		
 		List<Ingredient> ingredients = ingredientRepo.findAll();
 		
 		for (Ingredient ing : ingredients) {

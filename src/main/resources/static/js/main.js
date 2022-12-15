@@ -37,7 +37,6 @@ function displayDrinksActions() {
 }
 
 // Controllo elementi attivi navbar
-
 if (pizzaElAct.classList="active") {
-	document.getElementById("drink-actions").classList.remove("d-none");
+	document.getElementById("pizza-actions").classList.remove("d-none");
 }
